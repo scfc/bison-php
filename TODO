@@ -472,6 +472,65 @@ Here's a proposal for how a new implementation might look:
 
   http://lists.gnu.org/archive/html/bison-patches/2009-09/msg00086.html
 
+* PHP
+
+** Review generated code thoroughly
+
+*** Define PHP requirement
+
+What version of PHP should the generated code comply with?
+
+*** Robustness
+
+Typos (including confusing "$" and "$this->" for variables
+and "" and "self::"" for functions/methods) are a PITA with
+PHP.  Without full code coverage in testing, these may not
+be noticed.  A pedantic lint may be useful.
+
+*** Lexer interface
+
+Is the interface suitable for typical use cases?
+
+*** Namespace pollution
+
+All classes and interfaces in PHP are global, so all their
+names should be configur-/prefixable.
+
+*** final/static modifiers
+
+All final/static modifiers have been removed.  Does that
+make sense for PHP?
+
+*** Constants
+
+Java's "private static final" semi-constants have been
+replaced by "self::const"s.  Is there some legitimate
+scenario where someone extends a parser class and shoots
+himself in the foot with that?
+
+*** Overloaded methods
+
+The overloaded methods are emulated with default parameters
+and look *really* ugly.
+
+** Indentation
+
+Is there a GNU style?  A PHP style?  Otherwise, use
+MediaWiki's.
+
+** "<?php" should probably be configur/-switchable
+
+** PHP has no types with ranges, but one Number type. How to deal with that?
+
+** Properly escape "$" in $yytname_
+
+This is a syntax error in PHP.
+
+** Documentation
+
+** Examples
+
+
 -----
 
 Copyright (C) 2001-2004, 2006, 2008-2011 Free Software Foundation, Inc.

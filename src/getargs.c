@@ -66,6 +66,7 @@ static struct bison_language const valid_languages[] = {
   { "c", "c-skel.m4", ".c", ".h", true },
   { "c++", "c++-skel.m4", ".cc", ".hh", true },
   { "java", "java-skel.m4", ".java", ".java", false },
+  { "php", "php-skel.m4", ".php", ".php", false },
   { "", "", "", "", false }
 };
 
