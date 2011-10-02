@@ -26,7 +26,10 @@ dist_pkgdata_DATA =                             \
   data/java.m4                                  \
   data/lalr1.cc                                 \
   data/lalr1.java                               \
+  data/lalr1.php                                \
   data/location.cc                              \
+  data/php-skel.m4                              \
+  data/php.m4                                   \
   data/stack.hh                                 \
   data/variant.hh                               \
   data/yacc.c
