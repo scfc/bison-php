@@ -47,7 +47,6 @@ b4_percent_code_get([[imports]])
  * @@author LALR (1) parser skeleton written by Paolo Bonzini.
  */
 ]b4_percent_define_get3([annotations], [], [ ])dnl
-b4_public_if([public ])dnl
 b4_abstract_if([abstract ])dnl
 b4_final_if([final ])dnl
 b4_strictfp_if([strictfp ])dnl
@@ -79,7 +78,7 @@ b4_locations_if([[
    * <code>]b4_position_type[</code> class, denote a point in the input.
    * Locations represent a part of the input through the beginning
    * and ending positions.  */
-  public class ]b4_location_type[ {
+  class ]b4_location_type[ {
     /** The first, inclusive, position in the range.  */
     public ]b4_position_type[ begin;
 
@@ -130,7 +129,7 @@ b4_locations_if([[
    * Communication interface between the scanner and the Bison-generated
    * parser <tt>]b4_parser_class_name[</tt>.
    */
-  public interface Lexer {
+  interface Lexer {
     /** Token returned by the scanner to signal the end of its input.  */
     const EOF = 0;
 
@@ -168,7 +167,7 @@ b4_locations_if([[
      void yyerror (]b4_locations_if([b4_location_type[ loc, ]])[String msg);]
   }
 
-  b4_lexer_if([[private class YYLexer implements Lexer {
+  b4_lexer_if([[class YYLexer implements Lexer {
 ]b4_percent_code_get([[lexer]])[
   }
 
@@ -264,7 +263,7 @@ b4_lexer_if([[
       yyDebugStream.println (s);
   }
 
-  private final class YYStack {
+  final class YYStack {
     private int[] stateStack = new int[16];
     ]b4_locations_if([[private ]b4_location_type[[] locStack = new ]b4_location_type[[16];]])[
     private ]b4_yystype[[] valueStack = new ]b4_yystype[[16];

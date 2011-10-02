@@ -47,13 +47,6 @@ m4_define([b4_percent_define_get3],
 m4_define([b4_flag_value], [b4_flag_if([$1], [true], [false])])
 
 
-# b4_public_if(TRUE, FALSE)
-# -------------------------
-b4_percent_define_default([[public]], [[false]])
-m4_define([b4_public_if],
-[b4_percent_define_flag_if([public], [$1], [$2])])
-
-
 # b4_abstract_if(TRUE, FALSE)
 # ---------------------------
 b4_percent_define_default([[abstract]], [[false]])
