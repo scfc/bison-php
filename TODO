@@ -413,6 +413,8 @@ Java's "private static final" semi-constants have been replaced by
 "self::const"s.  Is there some legitimate scenario where someone
 extends a parser class and shoots himself in the foot with that?
 
+** "<?php" should probably be configur-/switchable
+
 -----
 
 Copyright (C) 2001-2004, 2006, 2008-2012 Free Software Foundation, Inc.

@@ -32,6 +32,7 @@ b4_symbol_foreach([b4_symbol_no_destructor_assert])
 
 m4_divert_push(0)dnl
 @output(b4_parser_file_name@)@
+<?php
 b4_copyright([Skeleton implementation for Bison LALR(1) parsers in PHP],
              [2007-2011])
 
