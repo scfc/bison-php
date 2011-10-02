@@ -155,7 +155,7 @@ b4_locations_if([[
      * to the next token and prepares to return the semantic value
      * ]b4_locations_if([and beginning/ending positions ])[of the token.
      * @@return the token identifier corresponding to the next token. */
-    int yylex () ]b4_maybe_throws([b4_lex_throws])[;
+    int yylex ();
 
     /**
      * Entry point for error reporting.  Emits an error
@@ -180,7 +180,7 @@ b4_lexer_if([[
   /**
    * Instantiates the Bison-generated parser.
    */
-  public ]b4_parser_class_name (b4_parse_param_decl([b4_lex_param_decl])[) ]b4_maybe_throws([b4_init_throws])[
+  public ]b4_parser_class_name (b4_parse_param_decl([b4_lex_param_decl])[)
   {
     ]b4_percent_code_get([[init]])[
     this.yylexer = new YYLexer(]b4_lex_param_call[);
@@ -192,7 +192,7 @@ b4_lexer_if([[
    * Instantiates the Bison-generated parser.
    * @@param yylexer The scanner that will supply tokens to the parser.
    */
-  b4_lexer_if([[protected]], [[public]]) b4_parser_class_name[ (]b4_parse_param_decl([[Lexer yylexer]])[) ]b4_maybe_throws([b4_init_throws])[
+  b4_lexer_if([[protected]], [[public]]) b4_parser_class_name[ (]b4_parse_param_decl([[Lexer yylexer]])[)
   {
     ]b4_percent_code_get([[init]])[
     this.yylexer = yylexer;
@@ -370,7 +370,7 @@ b4_lexer_if([[
     return yyerrstatus_ == 0;
   }
 
-  private int yyaction (int yyn, YYStack yystack, int yylen) ]b4_maybe_throws([b4_throws])[
+  private int yyaction (int yyn, YYStack yystack, int yylen)
   {
     ]b4_yystype[ yyval;
     ]b4_locations_if([b4_location_type[ yyloc = yylloc (yystack, yylen);]])[
@@ -471,7 +471,7 @@ b4_lexer_if([[
    * @@return <tt>true</tt> if the parsing succeeds.  Note that this does not
    *          imply that there were no syntax errors.
    */
-  public boolean parse () ]b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])[
+  public boolean parse ()
   {
     /// Lookahead and lookahead in internal form.
     int yychar = yyempty_;

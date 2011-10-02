@@ -188,15 +188,6 @@ m4_define_default([b4_prefix], [[YY]])
 b4_percent_define_default([[parser_class_name]], [b4_prefix[]Parser])
 m4_define([b4_parser_class_name], [b4_percent_define_get([[parser_class_name]])])
 
-b4_percent_define_default([[lex_throws]], [[java.io.IOException]])
-m4_define([b4_lex_throws], [b4_percent_define_get([[lex_throws]])])
-
-b4_percent_define_default([[throws]], [])
-m4_define([b4_throws], [b4_percent_define_get([[throws]])])
-
-b4_percent_define_default([[init_throws]], [])
-m4_define([b4_init_throws], [b4_percent_define_get([[init_throws]])])
-
 b4_percent_define_default([[location_type]], [Location])
 m4_define([b4_location_type], [b4_percent_define_get([[location_type]])])
 
@@ -322,11 +313,3 @@ m4_define([b4_var_decls],
 ], [$@])])
 m4_define([b4_var_decl],
           [    protected final $1;])
-
-
-
-# b4_maybe_throws(THROWS)
-# -----------------------
-# Expand to either an empty string or "throws THROWS".
-m4_define([b4_maybe_throws],
-          [m4_ifval($1, [throws $1])])
