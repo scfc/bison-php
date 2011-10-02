@@ -403,6 +403,16 @@ Here's a proposal for how a new implementation might look:
 
   http://lists.gnu.org/archive/html/bison-patches/2009-09/msg00086.html
 
+* PHP
+
+** Review generated code thoroughly
+
+*** Constants
+
+Java's "private static final" semi-constants have been replaced by
+"self::const"s.  Is there some legitimate scenario where someone
+extends a parser class and shoots himself in the foot with that?
+
 -----
 
 Copyright (C) 2001-2004, 2006, 2008-2012 Free Software Foundation, Inc.

@@ -85,10 +85,10 @@ m4_define([b4_lexer_if],
 # -----------------
 m4_define([b4_identification],
 [  /** Version number for the Bison executable that generated this parser.  */
-  public static final String bisonVersion = "b4_version";
+  const bisonVersion = "b4_version";
 
   /** Name of the skeleton that generated this parser.  */
-  public static final String bisonSkeleton = b4_skeleton;
+  const bisonSkeleton = b4_skeleton;
 ])
 
 
@@ -147,7 +147,7 @@ m4_define([b4_integral_parser_table_define],
 # Output the definition of this token as an enum.
 m4_define([b4_token_enum],
 [    /** Token number, to be returned by the scanner.  */
-    static final int b4_percent_define_get([api.tokens.prefix])$1 = $2;
+    const b4_percent_define_get([api.tokens.prefix])$1 = $2;
 ])
 
 

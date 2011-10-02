@@ -131,7 +131,7 @@ b4_locations_if([[
    */
   public interface Lexer {
     /** Token returned by the scanner to signal the end of its input.  */
-    public static final int EOF = 0;
+    const EOF = 0;
 
 ]b4_token_enums(b4_tokens)[
 
@@ -338,26 +338,26 @@ b4_lexer_if([[
   /**
    * Returned by a Bison action in order to stop the parsing process and
    * return success (<tt>true</tt>).  */
-  public static final int YYACCEPT = 0;
+  const YYACCEPT = 0;
 
   /**
    * Returned by a Bison action in order to stop the parsing process and
    * return failure (<tt>false</tt>).  */
-  public static final int YYABORT = 1;
+  const YYABORT = 1;
 
   /**
    * Returned by a Bison action in order to start error recovery without
    * printing an error message.  */
-  public static final int YYERROR = 2;
+  const YYERROR = 2;
 
   // Internal return codes that are not supported for user semantic
   // actions.
-  private static final int YYERRLAB = 3;
-  private static final int YYNEWSTATE = 4;
-  private static final int YYDEFAULT = 5;
-  private static final int YYREDUCE = 6;
-  private static final int YYERRLAB1 = 7;
-  private static final int YYRETURN = 8;
+  const YYERRLAB = 3;
+  const YYNEWSTATE = 4;
+  const YYDEFAULT = 5;
+  const YYREDUCE = 6;
+  const YYERRLAB1 = 7;
+  const YYRETURN = 8;
 
   private int yyerrstatus_ = 0;
 
@@ -401,15 +401,15 @@ b4_lexer_if([[
 
     /* Shift the result of the reduction.  */
     yyn = yyr1_[yyn];
-    int yystate = yypgoto_[yyn - yyntokens_] + yystack.stateAt (0);
-    if (0 <= yystate && yystate <= yylast_
+    int yystate = yypgoto_[yyn - self::yyntokens_] + yystack.stateAt (0);
+    if (0 <= yystate && yystate <= self::yylast_
         && yycheck_[yystate] == yystack.stateAt (0))
       yystate = yytable_[yystate];
     else
-      yystate = yydefgoto_[yyn - yyntokens_];
+      yystate = yydefgoto_[yyn - self::yyntokens_];
 
     yystack.push (yystate, yyval]b4_locations_if([, yyloc])[);
-    return YYNEWSTATE;
+    return self::YYNEWSTATE;
   }
 
 ]b4_error_verbose_if([[
@@ -458,7 +458,7 @@ b4_lexer_if([[
                                  b4_locations_if([, Object yylocationp])[)
   {
     if (yydebug > 0)
-    yycdebug (s + (yytype < yyntokens_ ? " token " : " nterm ")
+    yycdebug (s + (yytype < self::yyntokens_ ? " token " : " nterm ")
               + yytname_[yytype] + " ("]b4_locations_if([
               + yylocationp + ": "])[
               + (yyvaluep == null ? "(null)" : yyvaluep.toString ()) + ")");
@@ -474,7 +474,7 @@ b4_lexer_if([[
   public boolean parse ()
   {
     /// Lookahead and lookahead in internal form.
-    int yychar = yyempty_;
+    int yychar = self::yyempty_;
     int yytoken = 0;
 
     /* State.  */
@@ -514,31 +514,31 @@ m4_popdef([b4_at_dollar])])dnl
   [  /* Initialize the stack.  */
     yystack.push (yystate, yylval]b4_locations_if([, yylloc])[);
 
-    int label = YYNEWSTATE;
+    int label = self::YYNEWSTATE;
     for (;;)
       switch (label)
       {
         /* New state.  Unlike in the C/C++ skeletons, the state is already
            pushed when we come here.  */
-      case YYNEWSTATE:
+      case self::YYNEWSTATE:
         yycdebug ("Entering state " + yystate + "\n");
         if (yydebug > 0)
           yystack.print (yyDebugStream);
 
         /* Accept?  */
-        if (yystate == yyfinal_)
+        if (yystate == self::yyfinal_)
           return true;
 
         /* Take a decision.  First try without lookahead.  */
         yyn = yypact_[yystate];
         if (yy_pact_value_is_default_ (yyn))
           {
-            label = YYDEFAULT;
+            label = self::YYDEFAULT;
             break;
           }
 
         /* Read a lookahead token.  */
-        if (yychar == yyempty_)
+        if (yychar == self::yyempty_)
           {
             yycdebug ("Reading a token: ");
             yychar = yylexer.yylex ();]
@@ -549,9 +549,9 @@ m4_popdef([b4_at_dollar])])dnl
           }
 
         /* Convert token to internal form.  */
-        if (yychar <= Lexer.EOF)
+        if (yychar <= Lexer::EOF)
           {
-            yychar = yytoken = Lexer.EOF;
+            yychar = yytoken = Lexer::EOF;
             yycdebug ("Now at end of input.\n");
           }
         else
@@ -564,18 +564,18 @@ m4_popdef([b4_at_dollar])])dnl
         /* If the proper action on seeing token YYTOKEN is to reduce or to
            detect an error, take that action.  */
         yyn += yytoken;
-        if (yyn < 0 || yylast_ < yyn || yycheck_[yyn] != yytoken)
-          label = YYDEFAULT;
+        if (yyn < 0 || self::yylast_ < yyn || yycheck_[yyn] != yytoken)
+          label = self::YYDEFAULT;
 
         /* <= 0 means reduce or error.  */
         else if ((yyn = yytable_[yyn]) <= 0)
           {
             if (yy_table_value_is_error_ (yyn))
-              label = YYERRLAB;
+              label = self::YYERRLAB;
             else
               {
                 yyn = -yyn;
-                label = YYREDUCE;
+                label = self::YYREDUCE;
               }
           }
 
@@ -586,7 +586,7 @@ m4_popdef([b4_at_dollar])])dnl
                              yylval]b4_locations_if([, yylloc])[);
 
             /* Discard the token being shifted.  */
-            yychar = yyempty_;
+            yychar = self::yyempty_;
 
             /* Count tokens shifted since error; after three, turn off error
                status.  */
@@ -595,25 +595,25 @@ m4_popdef([b4_at_dollar])])dnl
 
             yystate = yyn;
             yystack.push (yystate, yylval]b4_locations_if([, yylloc])[);
-            label = YYNEWSTATE;
+            label = self::YYNEWSTATE;
           }
         break;
 
       /*-----------------------------------------------------------.
       | yydefault -- do the default action for the current state.  |
       `-----------------------------------------------------------*/
-      case YYDEFAULT:
+      case self::YYDEFAULT:
         yyn = yydefact_[yystate];
         if (yyn == 0)
-          label = YYERRLAB;
+          label = self::YYERRLAB;
         else
-          label = YYREDUCE;
+          label = self::YYREDUCE;
         break;
 
       /*-----------------------------.
       | yyreduce -- Do a reduction.  |
       `-----------------------------*/
-      case YYREDUCE:
+      case self::YYREDUCE:
         yylen = yyr2_[yyn];
         label = yyaction (yyn, yystack, yylen);
         yystate = yystack.stateAt (0);
@@ -622,13 +622,13 @@ m4_popdef([b4_at_dollar])])dnl
       /*------------------------------------.
       | yyerrlab -- here on detecting error |
       `------------------------------------*/
-      case YYERRLAB:
+      case self::YYERRLAB:
         /* If not already recovering from an error, report this error.  */
         if (yyerrstatus_ == 0)
           {
             ++yynerrs_;
-            if (yychar == yyempty_)
-              yytoken = yyempty_;
+            if (yychar == self::yyempty_)
+              yytoken = self::yyempty_;
             yyerror (]b4_locations_if([yylloc, ])[yysyntax_error (yystate, yytoken));
           }
 
@@ -638,25 +638,25 @@ m4_popdef([b4_at_dollar])])dnl
         /* If just tried and failed to reuse lookahead token after an
          error, discard it.  */
 
-        if (yychar <= Lexer.EOF)
+        if (yychar <= Lexer::EOF)
           {
           /* Return failure if at end of input.  */
-          if (yychar == Lexer.EOF)
+          if (yychar == Lexer::EOF)
             return false;
           }
         else
-              yychar = yyempty_;
+              yychar = self::yyempty_;
           }
 
         /* Else will try to reuse lookahead token after shifting the error
            token.  */
-        label = YYERRLAB1;
+        label = self::YYERRLAB1;
         break;
 
       /*---------------------------------------------------.
       | errorlab -- error raised explicitly by YYERROR.  |
       `---------------------------------------------------*/
-      case YYERROR:
+      case self::YYERROR:
 
         ]b4_locations_if([yyerrloc = yystack.locationAt (yylen - 1);])[
         /* Do not reclaim the symbols of the rule which action triggered
@@ -664,13 +664,13 @@ m4_popdef([b4_at_dollar])])dnl
         yystack.pop (yylen);
         yylen = 0;
         yystate = yystack.stateAt (0);
-        label = YYERRLAB1;
+        label = self::YYERRLAB1;
         break;
 
       /*-------------------------------------------------------------.
       | yyerrlab1 -- common code for both syntax error and YYERROR.  |
       `-------------------------------------------------------------*/
-      case YYERRLAB1:
+      case self::YYERRLAB1:
         yyerrstatus_ = 3;       /* Each real token shifted decrements this.  */
 
         for (;;)
@@ -678,8 +678,8 @@ m4_popdef([b4_at_dollar])])dnl
             yyn = yypact_[yystate];
             if (!yy_pact_value_is_default_ (yyn))
               {
-                yyn += yyterror_;
-                if (0 <= yyn && yyn <= yylast_ && yycheck_[yyn] == yyterror_)
+                yyn += self:yyterror_;
+                if (0 <= yyn && yyn <= self::yylast_ && yycheck_[yyn] == self::yyterror_)
                   {
                     yyn = yytable_[yyn];
                     if (0 < yyn)
@@ -711,15 +711,15 @@ m4_popdef([b4_at_dollar])])dnl
 
         yystate = yyn;
         yystack.push (yyn, yylval]b4_locations_if([, yyloc])[);
-        label = YYNEWSTATE;
+        label = self::YYNEWSTATE;
         break;
 
         /* Accept.  */
-      case YYACCEPT:
+      case self::YYACCEPT:
         return true;
 
         /* Abort.  */
-      case YYABORT:
+      case self::YYABORT:
         return false;
       }
   }
@@ -760,7 +760,7 @@ m4_popdef([b4_at_dollar])])dnl
              will still contain any token that will not be accepted due
              to an error action in a later state.
         */
-        if (tok != yyempty_)
+        if (tok != self::yyempty_)
           {
             // FIXME: This method of building the message is not compatible
             // with internationalization.
@@ -776,18 +776,18 @@ m4_popdef([b4_at_dollar])])dnl
                    actions.  */
                 int yyxbegin = yyn < 0 ? -yyn : 0;
                 /* Stay within bounds of both yycheck and yytname.  */
-                int yychecklim = yylast_ - yyn + 1;
-                int yyxend = yychecklim < yyntokens_ ? yychecklim : yyntokens_;
+                int yychecklim = self::yylast_ - yyn + 1;
+                int yyxend = yychecklim < self::yyntokens_ ? yychecklim : self::yyntokens_;
                 int count = 0;
                 for (int x = yyxbegin; x < yyxend; ++x)
-                  if (yycheck_[x + yyn] == x && x != yyterror_
+                  if (yycheck_[x + yyn] == x && x != self::yyterror_
                       && !yy_table_value_is_error_ (yytable_[x + yyn]))
                     ++count;
                 if (count < 5)
                   {
                     count = 0;
                     for (int x = yyxbegin; x < yyxend; ++x)
-                      if (yycheck_[x + yyn] == x && x != yyterror_
+                      if (yycheck_[x + yyn] == x && x != self::yyterror_
                           && !yy_table_value_is_error_ (yytable_[x + yyn]))
                         {
                           res.append (count++ == 0 ? ", expecting " : " or ");
@@ -808,7 +808,7 @@ m4_popdef([b4_at_dollar])])dnl
    */
   private static boolean yy_pact_value_is_default_ (int yyvalue)
   {
-    return yyvalue == yypact_ninf_;
+    return yyvalue == self::yypact_ninf_;
   }
 
   /**
@@ -817,11 +817,11 @@ m4_popdef([b4_at_dollar])])dnl
    */
   private static boolean yy_table_value_is_error_ (int yyvalue)
   {
-    return yyvalue == yytable_ninf_;
+    return yyvalue == self::yytable_ninf_;
   }
 
-  private static final ]b4_int_type_for([b4_pact])[ yypact_ninf_ = ]b4_pact_ninf[;
-  private static final ]b4_int_type_for([b4_table])[ yytable_ninf_ = ]b4_table_ninf[;
+  const yypact_ninf_ = ]b4_pact_ninf[;
+  const yytable_ninf_ = ]b4_table_ninf[;
 
   ]b4_parser_tables_define[
   ]b4_integral_parser_table_define([token_number], [b4_toknum],
@@ -860,22 +860,22 @@ m4_popdef([b4_at_dollar])])dnl
 
   private static final ]b4_int_type_for([b4_translate])[ yytranslate_ (int t)
   {
-    if (t >= 0 && t <= yyuser_token_number_max_)
+    if (t >= 0 && t <= self::yyuser_token_number_max_)
       return yytranslate_table_[t];
     else
-      return yyundef_token_;
+      return self::yyundef_token_;
   }
 
-  private static final int yylast_ = ]b4_last[;
-  private static final int yynnts_ = ]b4_nterms_number[;
-  private static final int yyempty_ = -2;
-  private static final int yyfinal_ = ]b4_final_state_number[;
-  private static final int yyterror_ = 1;
-  private static final int yyerrcode_ = 256;
-  private static final int yyntokens_ = ]b4_tokens_number[;
+  const yylast_ = ]b4_last[;
+  const yynnts_ = ]b4_nterms_number[;
+  const yyempty_ = -2;
+  const yyfinal_ = ]b4_final_state_number[;
+  const yyterror_ = 1;
+  const yyerrcode_ = 256;
+  const yyntokens_ = ]b4_tokens_number[;
 
-  private static final int yyuser_token_number_max_ = ]b4_user_token_number_max[;
-  private static final int yyundef_token_ = ]b4_undef_token_number[;
+  const yyuser_token_number_max_ = ]b4_user_token_number_max[;
+  const yyundef_token_ = ]b4_undef_token_number[;
 
 ]/* User implementation code.  */
 b4_percent_code_get[]dnl
