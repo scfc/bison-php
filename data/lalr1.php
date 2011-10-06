@@ -393,7 +393,7 @@ b4_lexer_if([[
         default: break;
       }
 
-    self::yy_symbol_print ("-> $$ =", $this->yyr1_[$yyn], $yyval]b4_locations_if([, $yyloc])[);
+    self::yy_symbol_print ("-> \$\$ =", $this->yyr1_[$yyn], $yyval]b4_locations_if([, $yyloc])[);
 
     $yystack->pop ($yylen);
     $yylen = 0;
@@ -441,7 +441,7 @@ b4_lexer_if([[
               return $yyr->toString ();
             }
       }
-    else if ($yystr->equals ("$end"))
+    else if ($yystr->equals ("\$end"))
       return "end of input";
 
     return $yystr;
@@ -843,7 +843,7 @@ m4_popdef([b4_at_dollar])])dnl
 
     /* The symbols being reduced.  */
     for ($yyi = 0; $yyi < $yynrhs; $yyi++)
-      self::yy_symbol_print ("   $" + ($yyi + 1) + " =",
+      self::yy_symbol_print ("   \$" + ($yyi + 1) + " =",
                        $this->yystos_[$yystack->stateAt($yyi + 1 - $yynrhs)],
                        ]b4_rhs_value($yynrhs, $yyi + 1)b4_locations_if([,
                        b4_rhs_location($yynrhs, $yyi + 1)])[);
