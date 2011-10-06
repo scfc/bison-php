@@ -62,14 +62,14 @@ b4_percent_define_get3([implements], [ implements ])[
   /**
    * Return whether verbose error messages are enabled.
    */
-  public final boolean getErrorVerbose() { return $this->yyErrorVerbose; }
+  public function getErrorVerbose() { return $this->yyErrorVerbose; }
 
   /**
    * Set the verbosity of error messages.
-   * @@param verbose True to request verbose error messages.
+   * @@param $verbose True to request verbose error messages.
    */
-  public final void setErrorVerbose(boolean verbose)
-  { $this->yyErrorVerbose = verbose; }
+  public function setErrorVerbose($verbose)
+  { $this->yyErrorVerbose = $verbose; }
 ]])
 
 b4_locations_if([[
@@ -88,25 +88,25 @@ b4_locations_if([[
     /**
      * Create a <code>]b4_location_type[</code> denoting an empty range located at
      * a given point.
-     * @@param loc The position at which the range is anchored.  */
-    public ]b4_location_type[ (]b4_position_type[ loc) {
-      $this->begin = $this->end = loc;
+     * @@param $loc The position at which the range is anchored.  */
+    public function ]b4_location_type[ (]b4_position_type[ $loc) {
+      $this->begin = $this->end = $loc;
     }
 
     /**
      * Create a <code>]b4_location_type[</code> from the endpoints of the range.
-     * @@param begin The first position included in the range.
-     * @@param end   The first position beyond the range.  */
-    public ]b4_location_type[ (]b4_position_type[ begin, ]b4_position_type[ end) {
-      $this->begin = begin;
-      $this->end = end;
+     * @@param $begin The first position included in the range.
+     * @@param $end   The first position beyond the range.  */
+    public function ]b4_location_type[ (]b4_position_type[ $begin, ]b4_position_type[ $end) {
+      $this->begin = $begin;
+      $this->end = $end;
     }
 
     /**
      * Print a representation of the location.  For this to be correct,
      * <code>]b4_position_type[</code> should override the <code>equals</code>
      * method.  */
-    public String toString () {
+    public function toString () {
       if ($this->begin->equals ($this->end))
         return $this->begin->toString ();
       else
@@ -117,12 +117,12 @@ b4_locations_if([[
 ]])
 
   b4_locations_if([[
-  private ]b4_location_type[ yylloc (YYStack rhs, int n)
+  private function yylloc (YYStack $rhs, $n)
   {
-    if (n > 0)
-      return new ]b4_location_type[ (rhs.locationAt (n-1).begin, rhs.locationAt (0).end);
+    if ($n > 0)
+      return new ]b4_location_type[ ($rhs->locationAt (n-1)->begin, $rhs->locationAt (0)->end);
     else
-      return new ]b4_location_type[ (rhs.locationAt (0).end);
+      return new ]b4_location_type[ ($rhs->locationAt (0)->end);
   }]])[
 
   /**
@@ -138,33 +138,33 @@ b4_locations_if([[
     ]b4_locations_if([[/**
      * Method to retrieve the beginning position of the last scanned token.
      * @@return the position at which the last scanned token starts.  */
-    ]b4_position_type[ getStartPos ();
+    function getStartPos ();
 
     /**
      * Method to retrieve the ending position of the last scanned token.
      * @@return the first position beyond the last scanned token.  */
-    ]b4_position_type[ getEndPos ();]])[
+    function getEndPos ();]])[
 
     /**
      * Method to retrieve the semantic value of the last scanned token.
      * @@return the semantic value of the last scanned token.  */
-    ]b4_yystype[ getLVal ();
+    function getLVal ();
 
     /**
      * Entry point for the scanner.  Returns the token identifier corresponding
      * to the next token and prepares to return the semantic value
      * ]b4_locations_if([and beginning/ending positions ])[of the token.
      * @@return the token identifier corresponding to the next token. */
-    int yylex ();
+    function yylex ();
 
     /**
      * Entry point for error reporting.  Emits an error
      * ]b4_locations_if([referring to the given location ])[in a user-defined way.
      *
-     * ]b4_locations_if([[@@param loc The location of the element to which the
+     * ]b4_locations_if([[@@param $loc The location of the element to which the
      *                error message is related]])[
-     * @@param msg The string for the error message.  */
-     void yyerror (]b4_locations_if([b4_location_type[ loc, ]])[String msg);]
+     * @@param $msg The string for the error message.  */
+     function yyerror (]b4_locations_if([b4_location_type[ $loc, ]])[$msg);]
   }
 
   b4_lexer_if([[class YYLexer implements Lexer {
@@ -180,7 +180,7 @@ b4_lexer_if([[
   /**
    * Instantiates the Bison-generated parser.
    */
-  public ]b4_parser_class_name (b4_parse_param_decl([b4_lex_param_decl])[)
+  public function ]b4_parser_class_name (b4_parse_param_decl([b4_lex_param_decl])[)
   {
     ]b4_percent_code_get([[init]])[
     $this->yylexer = new YYLexer(]b4_lex_param_call[);
@@ -190,12 +190,12 @@ b4_lexer_if([[
 
   /**
    * Instantiates the Bison-generated parser.
-   * @@param yylexer The scanner that will supply tokens to the parser.
+   * @@param $yylexer The scanner that will supply tokens to the parser.
    */
-  b4_lexer_if([[protected]], [[public]]) b4_parser_class_name[ (]b4_parse_param_decl([[Lexer yylexer]])[)
+  b4_lexer_if([[protected]], [[public]]) b4_parser_class_name[ (]b4_parse_param_decl([[Lexer $yylexer]])[)
   {
     ]b4_percent_code_get([[init]])[
-    $this->yylexer = yylexer;
+    $this->yylexer = $yylexer;
     ]b4_parse_param_cons[
   }
 
@@ -205,13 +205,13 @@ b4_lexer_if([[
    * Return the <tt>PrintStream</tt> on which the debugging output is
    * printed.
    */
-  public final java.io.PrintStream getDebugStream () { return $this->yyDebugStream; }
+  public function getDebugStream () { return $this->yyDebugStream; }
 
   /**
    * Set the <tt>PrintStream</tt> on which the debug output is printed.
-   * @@param s The stream that is used for debugging output.
+   * @@param $s The stream that is used for debugging output.
    */
-  public final void setDebugStream(java.io.PrintStream s) { $this->yyDebugStream = s; }
+  public function setDebugStream($s) { $this->yyDebugStream = $s; }
 
   private $yydebug = 0;
 
@@ -219,48 +219,48 @@ b4_lexer_if([[
    * Answer the verbosity of the debugging output; 0 means that all kinds of
    * output from the parser are suppressed.
    */
-  public final int getDebugLevel() { return $this->yydebug; }
+  public function getDebugLevel() { return $this->yydebug; }
 
   /**
    * Set the verbosity of the debugging output; 0 means that all kinds of
    * output from the parser are suppressed.
-   * @@param level The verbosity level for debugging output.
+   * @@param $level The verbosity level for debugging output.
    */
-  public final void setDebugLevel(int level) { $this->yydebug = level; }
+  public function setDebugLevel($level) { $this->yydebug = $level; }
 
   /**
    * Print an error message via the lexer.
    *]b4_locations_if([[ Use a <code>null</code> location.]])[
-   * @@param msg The error message.
+   * @@param $msg The error message.
    */
-  public final void yyerror (String msg)
+  public function yyerror ($msg)
   {
-    $this->yylexer->yyerror (]b4_locations_if([[(]b4_location_type[)null, ]])[msg);
+    $this->yylexer->yyerror (]b4_locations_if([[(]b4_location_type[)null, ]])[$msg);
   }
 ]b4_locations_if([[
   /**
    * Print an error message via the lexer.
-   * @@param loc The location associated with the message.
-   * @@param msg The error message.
+   * @@param $loc The location associated with the message.
+   * @@param $msg The error message.
    */
-  public final void yyerror (]b4_location_type[ loc, String msg)
+  public function yyerror (]b4_location_type[ $loc, $msg)
   {
-    $this->yylexer->yyerror (loc, msg);
+    $this->yylexer->yyerror ($loc, $msg);
   }
 
   /**
    * Print an error message via the lexer.
-   * @@param pos The position associated with the message.
-   * @@param msg The error message.
+   * @@param $pos The position associated with the message.
+   * @@param $msg The error message.
    */
-  public final void yyerror (]b4_position_type[ pos, String msg)
+  public function yyerror (]b4_position_type[ $pos, $msg)
   {
-    $this->yylexer->yyerror (new ]b4_location_type[ (pos), msg);
+    $this->yylexer->yyerror (new ]b4_location_type[ ($pos), $msg);
   }]])
 
-  [protected final void yycdebug (String s) {
+  [protected function yycdebug ($s) {
     if ($this->yydebug > 0)
-      $this->yyDebugStream->println (s);
+      $this->yyDebugStream->println ($s);
   }
 
   final class YYStack {
@@ -271,8 +271,8 @@ b4_lexer_if([[
     public $size = 16;
     public $height = -1;
 
-    public final void push (int state, ]b4_yystype[ value]dnl
-                            b4_locations_if([, ]b4_location_type[ loc])[) {
+    public function push ($state, $value]dnl
+                            b4_locations_if([, ]b4_location_type[ $loc])[) {
       $this->height++;
       if ($this->size == $this->height)
         {
@@ -291,47 +291,47 @@ b4_lexer_if([[
           $this->size *= 2;
         }
 
-      $this->stateStack[$this->height] = state;
-      ]b4_locations_if([[$this->locStack[$this->height] = loc;]])[
-      $this->valueStack[$this->height] = value;
+      $this->stateStack[$this->height] = $state;
+      ]b4_locations_if([[$this->locStack[$this->height] = $loc;]])[
+      $this->valueStack[$this->height] = $value;
     }
 
-    public final void pop () {
+    public function pop () {
       pop (1);
     }
 
-    public final void pop (int num) {
+    public function pop ($num) {
       // Avoid memory leaks... garbage collection is a white lie!
-      if (num > 0) {
-        java.util.Arrays.fill ($this->valueStack, $this->height - num + 1, $this->height + 1, null);
-        ]b4_locations_if([[java.util.Arrays.fill ($this->locStack, $this->height - num + 1, $this->height + 1, null);]])[
+      if ($num > 0) {
+        java.util.Arrays.fill ($this->valueStack, $this->height - $num + 1, $this->height + 1, null);
+        ]b4_locations_if([[java.util.Arrays.fill ($this->locStack, $this->height - $num + 1, $this->height + 1, null);]])[
       }
-      $this->height -= num;
+      $this->height -= $num;
     }
 
-    public final int stateAt (int i) {
-      return $this->stateStack[$this->height - i];
+    public function stateAt ($i) {
+      return $this->stateStack[$this->height - $i];
     }
 
-    ]b4_locations_if([[public final ]b4_location_type[ locationAt (int i) {
-      return $this->locStack[$this->height - i];
+    ]b4_locations_if([[public function locationAt ($i) {
+      return $this->locStack[$this->height - $i];
     }
 
-    ]])[public final ]b4_yystype[ valueAt (int i) {
-      return $this->valueStack[$this->height - i];
+    ]])[public function valueAt ($i) {
+      return $this->valueStack[$this->height - $i];
     }
 
     // Print the state stack on the debug stream.
-    public void print (java.io.PrintStream out)
+    public function print ($out)
     {
-      out.print ("Stack now");
+      $out->print ("Stack now");
 
       for (int i = 0; i <= $this->height; i++)
         {
-          out.print (' ');
-          out.print ($this->stateStack[i]);
+          $out->print (' ');
+          $out->print ($this->stateStack[i]);
         }
-      out.println ();
+      $out->println ();
     }
   }
 
@@ -365,15 +365,15 @@ b4_lexer_if([[
    * Return whether error recovery is being done.  In this state, the parser
    * reads token until it reaches a known state, and then restarts normal
    * operation.  */
-  public final boolean recovering ()
+  public function recovering ()
   {
     return $this->yyerrstatus_ == 0;
   }
 
-  private int yyaction (int yyn, YYStack yystack, int yylen)
+  private function yyaction ($yyn, YYStack $yystack, $yylen)
   {
     ]b4_yystype[ yyval;
-    ]b4_locations_if([b4_location_type[ yyloc = yylloc (yystack, yylen);]])[
+    ]b4_locations_if([b4_location_type[ yyloc = yylloc ($yystack, $yylen);]])[
 
     /* If YYLEN is nonzero, implement the default value of the action:
        `$$ = $1'.  Otherwise, use the top of the stack.
@@ -381,34 +381,34 @@ b4_lexer_if([[
        Otherwise, the following line sets YYVAL to garbage.
        This behavior is undocumented and Bison
        users should not rely upon it.  */
-    if (yylen > 0)
-      yyval = yystack.valueAt (yylen - 1);
+    if ($yylen > 0)
+      yyval = $yystack->valueAt ($yylen - 1);
     else
-      yyval = yystack.valueAt (0);
+      yyval = $yystack->valueAt (0);
 
-    yy_reduce_print (yyn, yystack);
+    yy_reduce_print ($yyn, $yystack);
 
-    switch (yyn)
+    switch ($yyn)
       {
         ]b4_user_actions[
         default: break;
       }
 
-    yy_symbol_print ("-> $$ =", $this->yyr1_[yyn], yyval]b4_locations_if([, yyloc])[);
+    yy_symbol_print ("-> $$ =", $this->yyr1_[$yyn], yyval]b4_locations_if([, yyloc])[);
 
-    yystack.pop (yylen);
-    yylen = 0;
+    $yystack->pop ($yylen);
+    $yylen = 0;
 
     /* Shift the result of the reduction.  */
-    yyn = $this->yyr1_[yyn];
-    int yystate = $this->yypgoto_[yyn - self::yyntokens_] + yystack.stateAt (0);
+    $yyn = $this->yyr1_[$yyn];
+    int yystate = $this->yypgoto_[$yyn - self::yyntokens_] + $yystack->stateAt (0);
     if (0 <= yystate && yystate <= self::yylast_
-        && $this->yycheck_[yystate] == yystack.stateAt (0))
+        && $this->yycheck_[yystate] == $yystack->stateAt (0))
       yystate = $this->yytable_[yystate];
     else
-      yystate = $this->yydefgoto_[yyn - self::yyntokens_];
+      yystate = $this->yydefgoto_[$yyn - self::yyntokens_];
 
-    yystack.push (yystate, yyval]b4_locations_if([, yyloc])[);
+    $yystack->push (yystate, yyval]b4_locations_if([, yyloc])[);
     return self::YYNEWSTATE;
   }
 
@@ -418,34 +418,34 @@ b4_lexer_if([[
      that double-quoting is unnecessary unless the string contains an
      apostrophe, a comma, or backslash (other than backslash-backslash).
      YYSTR is taken from yytname.  */
-  private final String yytnamerr_ (String yystr)
+  private function yytnamerr_ ($yystr)
   {
-    if (yystr.charAt (0) == '"')
+    if ($yystr->charAt (0) == '"')
       {
         StringBuffer yyr = new StringBuffer ();
-        strip_quotes: for (int i = 1; i < yystr.length (); i++)
-          switch (yystr.charAt (i))
+        strip_quotes: for (int i = 1; i < $yystr->length (); i++)
+          switch ($yystr->charAt (i))
             {
             case '\'':
             case ',':
               break strip_quotes;
 
             case '\\':
-              if (yystr.charAt(++i) != '\\')
+              if ($yystr->charAt(++i) != '\\')
                 break strip_quotes;
               /* Fall through.  */
             default:
-              yyr.append (yystr.charAt (i));
+              yyr.append ($yystr->charAt (i));
               break;
 
             case '"':
               return yyr.toString ();
             }
       }
-    else if (yystr.equals ("$end"))
+    else if ($yystr->equals ("$end"))
       return "end of input";
 
-    return yystr;
+    return $yystr;
   }
 ]])[
 
@@ -453,15 +453,15 @@ b4_lexer_if([[
   | Print this symbol on YYOUTPUT.  |
   `--------------------------------*/
 
-  private void yy_symbol_print (String s, int yytype,
-                                 ]b4_yystype[ yyvaluep]dnl
-                                 b4_locations_if([, Object yylocationp])[)
+  private function yy_symbol_print ($s, $yytype,
+                                 $yyvaluep]dnl
+                                 b4_locations_if([, $yylocationp])[)
   {
     if ($this->yydebug > 0)
-    yycdebug (s + (yytype < self::yyntokens_ ? " token " : " nterm ")
-              + $this->yytname_[yytype] + " ("]b4_locations_if([
-              + yylocationp + ": "])[
-              + (yyvaluep == null ? "(null)" : yyvaluep.toString ()) + ")");
+    yycdebug ($s + ($yytype < self::yyntokens_ ? " token " : " nterm ")
+              + $this->yytname_[$yytype] + " ("]b4_locations_if([
+              + $yylocationp + ": "])[
+              + ($yyvaluep == null ? "(null)" : $yyvaluep->toString ()) + ")");
   }
 
   /**
@@ -471,7 +471,7 @@ b4_lexer_if([[
    * @@return <tt>true</tt> if the parsing succeeds.  Note that this does not
    *          imply that there were no syntax errors.
    */
-  public boolean parse ()
+  public function parse ()
   {
     /// Lookahead and lookahead in internal form.
     int yychar = self::yyempty_;
@@ -725,7 +725,7 @@ m4_popdef([b4_at_dollar])])dnl
   }
 
   // Generate an error message.
-  private String yysyntax_error (int yystate, int tok)
+  private function yysyntax_error ($yystate, $tok)
   {]b4_error_verbose_if([[
     if ($this->yyErrorVerbose)
       {
@@ -760,14 +760,14 @@ m4_popdef([b4_at_dollar])])dnl
              will still contain any token that will not be accepted due
              to an error action in a later state.
         */
-        if (tok != self::yyempty_)
+        if ($tok != self::yyempty_)
           {
             // FIXME: This method of building the message is not compatible
             // with internationalization.
             StringBuffer res =
               new StringBuffer ("syntax error, unexpected ");
-            res.append (yytnamerr_ ($this->yytname_[tok]));
-            int yyn = $this->yypact_[yystate];
+            res.append (yytnamerr_ ($this->yytname_[$tok]));
+            int yyn = $this->yypact_[$yystate];
             if (!yy_pact_value_is_default_ (yyn))
               {
                 /* Start YYX at -YYN if negative to avoid negative
@@ -804,20 +804,20 @@ m4_popdef([b4_at_dollar])])dnl
 
   /**
    * Whether the given <code>yypact_</code> value indicates a defaulted state.
-   * @@param yyvalue   the value to check
+   * @@param $yyvalue   the value to check
    */
-  private static boolean yy_pact_value_is_default_ (int yyvalue)
+  private function yy_pact_value_is_default_ ($yyvalue)
   {
-    return yyvalue == self::yypact_ninf_;
+    return $yyvalue == self::yypact_ninf_;
   }
 
   /**
    * Whether the given <code>yytable_</code> value indicates a syntax error.
-   * @@param yyvalue   the value to check
+   * @@param $yyvalue   the value to check
    */
-  private static boolean yy_table_value_is_error_ (int yyvalue)
+  private function yy_table_value_is_error_ ($yyvalue)
   {
-    return yyvalue == self::yytable_ninf_;
+    return $yyvalue == self::yytable_ninf_;
   }
 
   const yypact_ninf_ = ]b4_pact_ninf[;
@@ -836,21 +836,21 @@ m4_popdef([b4_at_dollar])])dnl
   [YYRLINE[YYN] -- Source line where rule number YYN was defined.])[
 
   // Report on the debug stream that the rule yyrule is going to be reduced.
-  private void yy_reduce_print (int yyrule, YYStack yystack)
+  private function yy_reduce_print ($yyrule, YYStack $yystack)
   {
     if ($this->yydebug == 0)
       return;
 
-    int yylno = $this->yyrline_[yyrule];
-    int yynrhs = $this->yyr2_[yyrule];
+    int yylno = $this->yyrline_[$yyrule];
+    int yynrhs = $this->yyr2_[$yyrule];
     /* Print the symbols being reduced, and their result.  */
-    yycdebug ("Reducing stack by rule " + (yyrule - 1)
+    yycdebug ("Reducing stack by rule " + ($yyrule - 1)
               + " (line " + yylno + "), ");
 
     /* The symbols being reduced.  */
     for (int yyi = 0; yyi < yynrhs; yyi++)
       yy_symbol_print ("   $" + (yyi + 1) + " =",
-                       $this->yystos_[yystack.stateAt(yyi + 1 - yynrhs)],
+                       $this->yystos_[$yystack->stateAt(yyi + 1 - yynrhs)],
                        ]b4_rhs_value(yynrhs, yyi + 1)b4_locations_if([,
                        b4_rhs_location(yynrhs, yyi + 1)])[);
   }
@@ -858,10 +858,10 @@ m4_popdef([b4_at_dollar])])dnl
   /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
   ]b4_integral_parser_table_define([translate_table], [b4_translate])[
 
-  private static final ]b4_int_type_for([b4_translate])[ yytranslate_ (int t)
+  private function yytranslate_ ($t)
   {
-    if (t >= 0 && t <= self::yyuser_token_number_max_)
-      return $this->yytranslate_table_[t];
+    if ($t >= 0 && $t <= self::yyuser_token_number_max_)
+      return $this->yytranslate_table_[$t];
     else
       return self::yyundef_token_;
   }

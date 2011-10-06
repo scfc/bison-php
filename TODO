@@ -407,6 +407,11 @@ Here's a proposal for how a new implementation might look:
 
 ** Review generated code thoroughly
 
+*** final/static modifiers
+
+All final/static modifiers have been removed.  Does that make sense
+in PHP?
+
 *** Constants
 
 Java's "private static final" semi-constants have been replaced by
