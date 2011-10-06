@@ -192,7 +192,7 @@ m4_define([b4_position_type], [b4_percent_define_get([[position_type]])])
 # b4_lhs_value([TYPE])
 # --------------------
 # Expansion of $<TYPE>$.
-m4_define([b4_lhs_value], [yyval])
+m4_define([b4_lhs_value], [$yyval])
 
 
 # b4_rhs_value(RULE-LENGTH, NUM, [TYPE])
@@ -209,7 +209,7 @@ m4_define([b4_rhs_value],
 # -----------------
 # Expansion of @$.
 m4_define([b4_lhs_location],
-[(yyloc)])
+[($yyloc)])
 
 
 # b4_rhs_location(RULE-LENGTH, NUM)

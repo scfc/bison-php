@@ -276,17 +276,17 @@ b4_lexer_if([[
       $this->height++;
       if ($this->size == $this->height)
         {
-          int[] newStateStack = new int[$this->size * 2];
-          System.arraycopy ($this->stateStack, 0, newStateStack, 0, $this->height);
-          $this->stateStack = newStateStack;
+          $newStateStack = array();
+          System.arraycopy ($this->stateStack, 0, $newStateStack, 0, $this->height);
+          $this->stateStack = $newStateStack;
           ]b4_locations_if([[
-          ]b4_location_type[[] newLocStack = new ]b4_location_type[[$this->size * 2];
-          System.arraycopy ($this->locStack, 0, newLocStack, 0, $this->height);
-          $this->locStack = newLocStack;]])
+          $newLocStack = array();
+          System.arraycopy ($this->locStack, 0, $newLocStack, 0, $this->height);
+          $this->locStack = $newLocStack;]])
 
-          b4_yystype[[] newValueStack = new ]b4_yystype[[$this->size * 2];
-          System.arraycopy ($this->valueStack, 0, newValueStack, 0, $this->height);
-          $this->valueStack = newValueStack;
+          $newValueStack = array();
+          System.arraycopy ($this->valueStack, 0, $newValueStack, 0, $this->height);
+          $this->valueStack = $newValueStack;
 
           $this->size *= 2;
         }
@@ -326,10 +326,10 @@ b4_lexer_if([[
     {
       $out->print ("Stack now");
 
-      for (int i = 0; i <= $this->height; i++)
+      for ($i = 0; $i <= $this->height; $i++)
         {
           $out->print (' ');
-          $out->print ($this->stateStack[i]);
+          $out->print ($this->stateStack[$i]);
         }
       $out->println ();
     }
@@ -372,8 +372,7 @@ b4_lexer_if([[
 
   private function yyaction ($yyn, YYStack $yystack, $yylen)
   {
-    ]b4_yystype[ yyval;
-    ]b4_locations_if([b4_location_type[ yyloc = yylloc ($yystack, $yylen);]])[
+    ]b4_locations_if([[$yyloc = yylloc ($yystack, $yylen);]])[
 
     /* If YYLEN is nonzero, implement the default value of the action:
        `$$ = $1'.  Otherwise, use the top of the stack.
@@ -382,9 +381,9 @@ b4_lexer_if([[
        This behavior is undocumented and Bison
        users should not rely upon it.  */
     if ($yylen > 0)
-      yyval = $yystack->valueAt ($yylen - 1);
+      $yyval = $yystack->valueAt ($yylen - 1);
     else
-      yyval = $yystack->valueAt (0);
+      $yyval = $yystack->valueAt (0);
 
     yy_reduce_print ($yyn, $yystack);
 
@@ -394,21 +393,21 @@ b4_lexer_if([[
         default: break;
       }
 
-    yy_symbol_print ("-> $$ =", $this->yyr1_[$yyn], yyval]b4_locations_if([, yyloc])[);
+    yy_symbol_print ("-> $$ =", $this->yyr1_[$yyn], $yyval]b4_locations_if([, $yyloc])[);
 
     $yystack->pop ($yylen);
     $yylen = 0;
 
     /* Shift the result of the reduction.  */
     $yyn = $this->yyr1_[$yyn];
-    int yystate = $this->yypgoto_[$yyn - self::yyntokens_] + $yystack->stateAt (0);
-    if (0 <= yystate && yystate <= self::yylast_
-        && $this->yycheck_[yystate] == $yystack->stateAt (0))
-      yystate = $this->yytable_[yystate];
+    $yystate = $this->yypgoto_[$yyn - self::yyntokens_] + $yystack->stateAt (0);
+    if (0 <= $yystate && $yystate <= self::yylast_
+        && $this->yycheck_[$yystate] == $yystack->stateAt (0))
+      $yystate = $this->yytable_[$yystate];
     else
-      yystate = $this->yydefgoto_[$yyn - self::yyntokens_];
+      $yystate = $this->yydefgoto_[$yyn - self::yyntokens_];
 
-    $yystack->push (yystate, yyval]b4_locations_if([, yyloc])[);
+    $yystack->push ($yystate, $yyval]b4_locations_if([, $yyloc])[);
     return self::YYNEWSTATE;
   }
 
@@ -422,24 +421,24 @@ b4_lexer_if([[
   {
     if ($yystr->charAt (0) == '"')
       {
-        StringBuffer yyr = new StringBuffer ();
-        strip_quotes: for (int i = 1; i < $yystr->length (); i++)
-          switch ($yystr->charAt (i))
+        $yyr = new StringBuffer ();
+        strip_quotes: for ($i = 1; $i < $yystr->length (); $i++)
+          switch ($yystr->charAt ($i))
             {
             case '\'':
             case ',':
               break strip_quotes;
 
             case '\\':
-              if ($yystr->charAt(++i) != '\\')
+              if ($yystr->charAt(++$i) != '\\')
                 break strip_quotes;
               /* Fall through.  */
             default:
-              yyr.append ($yystr->charAt (i));
+              $yyr->append ($yystr->charAt ($i));
               break;
 
             case '"':
-              return yyr.toString ();
+              return $yyr->toString ();
             }
       }
     else if ($yystr->equals ("$end"))
@@ -474,31 +473,26 @@ b4_lexer_if([[
   public function parse ()
   {
     /// Lookahead and lookahead in internal form.
-    int yychar = self::yyempty_;
-    int yytoken = 0;
+    $yychar = self::yyempty_;
+    $yytoken = 0;
 
     /* State.  */
-    int yyn = 0;
-    int yylen = 0;
-    int yystate = 0;
+    $yyn = 0;
+    $yylen = 0;
+    $yystate = 0;
 
-    YYStack yystack = new YYStack ();
+    $yystack = new YYStack ();
 
     /* Error handling.  */
-    int yynerrs_ = 0;
+    $yynerrs_ = 0;
     ]b4_locations_if([/// The location where the error started.
-    ]b4_location_type[ yyerrloc = null;
+    $yyerrloc = null;
 
     /// ]b4_location_type[ of the lookahead.
-    ]b4_location_type[ yylloc = new ]b4_location_type[ (null, null);
-
-    /// @@$.
-    ]b4_location_type[ yyloc;])
+    $yylloc = new ]b4_location_type[ (null, null);
 
     /// Semantic value of the lookahead.
-    b4_yystype[ yylval = null;
-
-    int yyresult;
+    [$yylval = null;
 
     yycdebug ("Starting parse\n");
     $this->yyerrstatus_ = 0;
@@ -512,90 +506,90 @@ m4_popdef([b4_dollar_dollar])dnl
 m4_popdef([b4_at_dollar])])dnl
 
   [  /* Initialize the stack.  */
-    yystack.push (yystate, yylval]b4_locations_if([, yylloc])[);
+    $yystack->push ($yystate, $yylval]b4_locations_if([, $yylloc])[);
 
-    int label = self::YYNEWSTATE;
+    $label = self::YYNEWSTATE;
     for (;;)
-      switch (label)
+      switch ($label)
       {
         /* New state.  Unlike in the C/C++ skeletons, the state is already
            pushed when we come here.  */
       case self::YYNEWSTATE:
-        yycdebug ("Entering state " + yystate + "\n");
+        yycdebug ("Entering state " + $yystate + "\n");
         if ($this->yydebug > 0)
-          yystack.print ($this->yyDebugStream);
+          $yystack->print ($this->yyDebugStream);
 
         /* Accept?  */
-        if (yystate == self::yyfinal_)
+        if ($yystate == self::yyfinal_)
           return true;
 
         /* Take a decision.  First try without lookahead.  */
-        yyn = $this->yypact_[yystate];
-        if (yy_pact_value_is_default_ (yyn))
+        $yyn = $this->yypact_[$yystate];
+        if (yy_pact_value_is_default_ ($yyn))
           {
-            label = self::YYDEFAULT;
+            $label = self::YYDEFAULT;
             break;
           }
 
         /* Read a lookahead token.  */
-        if (yychar == self::yyempty_)
+        if ($yychar == self::yyempty_)
           {
             yycdebug ("Reading a token: ");
-            yychar = $this->yylexer->yylex ();]
+            $yychar = $this->yylexer->yylex ();]
             b4_locations_if([[
-            yylloc = new ]b4_location_type[($this->yylexer->getStartPos (),
+            $yylloc = new ]b4_location_type[($this->yylexer->getStartPos (),
                             $this->yylexer->getEndPos ());]])
-            yylval = $this->yylexer->getLVal ();[
+            $yylval = $this->yylexer->getLVal ();[
           }
 
         /* Convert token to internal form.  */
-        if (yychar <= Lexer::EOF)
+        if ($yychar <= Lexer::EOF)
           {
-            yychar = yytoken = Lexer::EOF;
+            $yychar = $yytoken = Lexer::EOF;
             yycdebug ("Now at end of input.\n");
           }
         else
           {
-            yytoken = yytranslate_ (yychar);
-            yy_symbol_print ("Next token is", yytoken,
-                             yylval]b4_locations_if([, yylloc])[);
+            $yytoken = yytranslate_ ($yychar);
+            yy_symbol_print ("Next token is", $yytoken,
+                             $yylval]b4_locations_if([, $yylloc])[);
           }
 
         /* If the proper action on seeing token YYTOKEN is to reduce or to
            detect an error, take that action.  */
-        yyn += yytoken;
-        if (yyn < 0 || self::yylast_ < yyn || $this->yycheck_[yyn] != yytoken)
-          label = self::YYDEFAULT;
+        $yyn += $yytoken;
+        if ($yyn < 0 || self::yylast_ < $yyn || $this->yycheck_[$yyn] != $yytoken)
+          $label = self::YYDEFAULT;
 
         /* <= 0 means reduce or error.  */
-        else if ((yyn = $this->yytable_[yyn]) <= 0)
+        else if (($yyn = $this->yytable_[$yyn]) <= 0)
           {
-            if (yy_table_value_is_error_ (yyn))
-              label = self::YYERRLAB;
+            if (yy_table_value_is_error_ ($yyn))
+              $label = self::YYERRLAB;
             else
               {
-                yyn = -yyn;
-                label = self::YYREDUCE;
+                $yyn = -$yyn;
+                $label = self::YYREDUCE;
               }
           }
 
         else
           {
             /* Shift the lookahead token.  */
-            yy_symbol_print ("Shifting", yytoken,
-                             yylval]b4_locations_if([, yylloc])[);
+            yy_symbol_print ("Shifting", $yytoken,
+                             $yylval]b4_locations_if([, $yylloc])[);
 
             /* Discard the token being shifted.  */
-            yychar = self::yyempty_;
+            $yychar = self::yyempty_;
 
             /* Count tokens shifted since error; after three, turn off error
                status.  */
             if ($this->yyerrstatus_ > 0)
               --$this->yyerrstatus_;
 
-            yystate = yyn;
-            yystack.push (yystate, yylval]b4_locations_if([, yylloc])[);
-            label = self::YYNEWSTATE;
+            $yystate = $yyn;
+            $yystack->push ($yystate, $yylval]b4_locations_if([, $yylloc])[);
+            $label = self::YYNEWSTATE;
           }
         break;
 
@@ -603,20 +597,20 @@ m4_popdef([b4_at_dollar])])dnl
       | yydefault -- do the default action for the current state.  |
       `-----------------------------------------------------------*/
       case self::YYDEFAULT:
-        yyn = $this->yydefact_[yystate];
-        if (yyn == 0)
-          label = self::YYERRLAB;
+        $yyn = $this->yydefact_[$yystate];
+        if ($yyn == 0)
+          $label = self::YYERRLAB;
         else
-          label = self::YYREDUCE;
+          $label = self::YYREDUCE;
         break;
 
       /*-----------------------------.
       | yyreduce -- Do a reduction.  |
       `-----------------------------*/
       case self::YYREDUCE:
-        yylen = $this->yyr2_[yyn];
-        label = yyaction (yyn, yystack, yylen);
-        yystate = yystack.stateAt (0);
+        $yylen = $this->yyr2_[$yyn];
+        $label = yyaction ($yyn, $yystack, $yylen);
+        $yystate = $yystack->stateAt (0);
         break;
 
       /*------------------------------------.
@@ -626,31 +620,31 @@ m4_popdef([b4_at_dollar])])dnl
         /* If not already recovering from an error, report this error.  */
         if ($this->yyerrstatus_ == 0)
           {
-            ++yynerrs_;
-            if (yychar == self::yyempty_)
-              yytoken = self::yyempty_;
-            yyerror (]b4_locations_if([yylloc, ])[yysyntax_error (yystate, yytoken));
+            ++$yynerrs_;
+            if ($yychar == self::yyempty_)
+              $yytoken = self::yyempty_;
+            yyerror (]b4_locations_if([$yylloc, ])[yysyntax_error ($yystate, $yytoken));
           }
 
-        ]b4_locations_if([yyerrloc = yylloc;])[
+        ]b4_locations_if([$yyerrloc = $yylloc;])[
         if ($this->yyerrstatus_ == 3)
           {
         /* If just tried and failed to reuse lookahead token after an
          error, discard it.  */
 
-        if (yychar <= Lexer::EOF)
+        if ($yychar <= Lexer::EOF)
           {
           /* Return failure if at end of input.  */
-          if (yychar == Lexer::EOF)
+          if ($yychar == Lexer::EOF)
             return false;
           }
         else
-              yychar = self::yyempty_;
+              $yychar = self::yyempty_;
           }
 
         /* Else will try to reuse lookahead token after shifting the error
            token.  */
-        label = self::YYERRLAB1;
+        $label = self::YYERRLAB1;
         break;
 
       /*---------------------------------------------------.
@@ -658,13 +652,13 @@ m4_popdef([b4_at_dollar])])dnl
       `---------------------------------------------------*/
       case self::YYERROR:
 
-        ]b4_locations_if([yyerrloc = yystack.locationAt (yylen - 1);])[
+        ]b4_locations_if([$yyerrloc = $yystack->locationAt ($yylen - 1);])[
         /* Do not reclaim the symbols of the rule which action triggered
            this YYERROR.  */
-        yystack.pop (yylen);
-        yylen = 0;
-        yystate = yystack.stateAt (0);
-        label = self::YYERRLAB1;
+        $yystack->pop ($yylen);
+        $yylen = 0;
+        $yystate = $yystack->stateAt (0);
+        $label = self::YYERRLAB1;
         break;
 
       /*-------------------------------------------------------------.
@@ -675,43 +669,43 @@ m4_popdef([b4_at_dollar])])dnl
 
         for (;;)
           {
-            yyn = $this->yypact_[yystate];
-            if (!yy_pact_value_is_default_ (yyn))
+            $yyn = $this->yypact_[$yystate];
+            if (!yy_pact_value_is_default_ ($yyn))
               {
-                yyn += self:yyterror_;
-                if (0 <= yyn && yyn <= self::yylast_ && $this->yycheck_[yyn] == self::yyterror_)
+                $yyn += self:yyterror_;
+                if (0 <= $yyn && $yyn <= self::yylast_ && $this->yycheck_[$yyn] == self::yyterror_)
                   {
-                    yyn = $this->yytable_[yyn];
-                    if (0 < yyn)
+                    $yyn = $this->yytable_[$yyn];
+                    if (0 < $yyn)
                       break;
                   }
               }
 
             /* Pop the current state because it cannot handle the error token.  */
-            if (yystack.height == 1)
+            if ($yystack->height == 1)
               return false;
 
-            ]b4_locations_if([yyerrloc = yystack.locationAt (0);])[
-            yystack.pop ();
-            yystate = yystack.stateAt (0);
+            ]b4_locations_if([$yyerrloc = $yystack->locationAt (0);])[
+            $yystack->pop ();
+            $yystate = $yystack->stateAt (0);
             if ($this->yydebug > 0)
-              yystack.print ($this->yyDebugStream);
+              $yystack->print ($this->yyDebugStream);
           }
 
         ]b4_locations_if([
         /* Muck with the stack to setup for yylloc.  */
-        yystack.push (0, null, yylloc);
-        yystack.push (0, null, yyerrloc);
-        yyloc = yylloc (yystack, 2);
-        yystack.pop (2);])[
+        $yystack->push (0, null, $yylloc);
+        $yystack->push (0, null, $yyerrloc);
+        $yyloc = yylloc ($yystack, 2);
+        $yystack->pop (2);])[
 
         /* Shift the error token.  */
-        yy_symbol_print ("Shifting", $this->yystos_[yyn],
-                         yylval]b4_locations_if([, yyloc])[);
+        yy_symbol_print ("Shifting", $this->yystos_[$yyn],
+                         $yylval]b4_locations_if([, $yyloc])[);
 
-        yystate = yyn;
-        yystack.push (yyn, yylval]b4_locations_if([, yyloc])[);
-        label = self::YYNEWSTATE;
+        $yystate = $yyn;
+        $yystack->push ($yyn, $yylval]b4_locations_if([, $yyloc])[);
+        $label = self::YYNEWSTATE;
         break;
 
         /* Accept.  */
@@ -764,38 +758,38 @@ m4_popdef([b4_at_dollar])])dnl
           {
             // FIXME: This method of building the message is not compatible
             // with internationalization.
-            StringBuffer res =
+            $res =
               new StringBuffer ("syntax error, unexpected ");
-            res.append (yytnamerr_ ($this->yytname_[$tok]));
-            int yyn = $this->yypact_[$yystate];
-            if (!yy_pact_value_is_default_ (yyn))
+            $res->append (yytnamerr_ ($this->yytname_[$tok]));
+            $yyn = $this->yypact_[$yystate];
+            if (!yy_pact_value_is_default_ ($yyn))
               {
                 /* Start YYX at -YYN if negative to avoid negative
                    indexes in YYCHECK.  In other words, skip the first
                    -YYN actions for this state because they are default
                    actions.  */
-                int yyxbegin = yyn < 0 ? -yyn : 0;
+                $yyxbegin = $yyn < 0 ? -$yyn : 0;
                 /* Stay within bounds of both yycheck and yytname.  */
-                int yychecklim = self::yylast_ - yyn + 1;
-                int yyxend = yychecklim < self::yyntokens_ ? yychecklim : self::yyntokens_;
-                int count = 0;
-                for (int x = yyxbegin; x < yyxend; ++x)
-                  if ($this->yycheck_[x + yyn] == x && x != self::yyterror_
-                      && !yy_table_value_is_error_ ($this->yytable_[x + yyn]))
-                    ++count;
-                if (count < 5)
+                $yychecklim = self::yylast_ - $yyn + 1;
+                $yyxend = $yychecklim < self::yyntokens_ ? $yychecklim : self::yyntokens_;
+                $count = 0;
+                for ($x = $yyxbegin; $x < $yyxend; ++$x)
+                  if ($this->yycheck_[$x + $yyn] == $x && $x != self::yyterror_
+                      && !yy_table_value_is_error_ ($this->yytable_[$x + $yyn]))
+                    ++$count;
+                if ($count < 5)
                   {
-                    count = 0;
-                    for (int x = yyxbegin; x < yyxend; ++x)
-                      if ($this->yycheck_[x + yyn] == x && x != self::yyterror_
-                          && !yy_table_value_is_error_ ($this->yytable_[x + yyn]))
+                    $count = 0;
+                    for ($x = $yyxbegin; $x < $yyxend; ++$x)
+                      if ($this->yycheck_[$x + $yyn] == $x && $x != self::yyterror_
+                          && !yy_table_value_is_error_ ($this->yytable_[$x + $yyn]))
                         {
-                          res.append (count++ == 0 ? ", expecting " : " or ");
-                          res.append (yytnamerr_ ($this->yytname_[x]));
+                          $res->append ($count++ == 0 ? ", expecting " : " or ");
+                          $res->append (yytnamerr_ ($this->yytname_[$x]));
                         }
                   }
               }
-            return res.toString ();
+            return $res->toString ();
           }
       }
 ]])[
@@ -841,18 +835,18 @@ m4_popdef([b4_at_dollar])])dnl
     if ($this->yydebug == 0)
       return;
 
-    int yylno = $this->yyrline_[$yyrule];
-    int yynrhs = $this->yyr2_[$yyrule];
+    $yylno = $this->yyrline_[$yyrule];
+    $yynrhs = $this->yyr2_[$yyrule];
     /* Print the symbols being reduced, and their result.  */
     yycdebug ("Reducing stack by rule " + ($yyrule - 1)
-              + " (line " + yylno + "), ");
+              + " (line " + $yylno + "), ");
 
     /* The symbols being reduced.  */
-    for (int yyi = 0; yyi < yynrhs; yyi++)
-      yy_symbol_print ("   $" + (yyi + 1) + " =",
-                       $this->yystos_[$yystack->stateAt(yyi + 1 - yynrhs)],
-                       ]b4_rhs_value(yynrhs, yyi + 1)b4_locations_if([,
-                       b4_rhs_location(yynrhs, yyi + 1)])[);
+    for ($yyi = 0; $yyi < $yynrhs; $yyi++)
+      yy_symbol_print ("   $" + ($yyi + 1) + " =",
+                       $this->yystos_[$yystack->stateAt($yyi + 1 - $yynrhs)],
+                       ]b4_rhs_value($yynrhs, $yyi + 1)b4_locations_if([,
+                       b4_rhs_location($yynrhs, $yyi + 1)])[);
   }
 
   /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
