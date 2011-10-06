@@ -89,7 +89,7 @@ b4_locations_if([[
      * Create a <code>]b4_location_type[</code> denoting an empty range located at
      * a given point.
      * @@param $loc The position at which the range is anchored.  */
-    public function ]b4_location_type[ (]b4_position_type[ $loc) {
+    public function __construct (]b4_position_type[ $loc) {
       $this->begin = $this->end = $loc;
     }
 
@@ -97,7 +97,7 @@ b4_locations_if([[
      * Create a <code>]b4_location_type[</code> from the endpoints of the range.
      * @@param $begin The first position included in the range.
      * @@param $end   The first position beyond the range.  */
-    public function ]b4_location_type[ (]b4_position_type[ $begin, ]b4_position_type[ $end) {
+    public function __construct (]b4_position_type[ $begin, ]b4_position_type[ $end) {
       $this->begin = $begin;
       $this->end = $end;
     }
@@ -180,7 +180,7 @@ b4_lexer_if([[
   /**
    * Instantiates the Bison-generated parser.
    */
-  public function ]b4_parser_class_name (b4_parse_param_decl([b4_lex_param_decl])[)
+  public function __construct (]b4_parse_param_decl([b4_lex_param_decl])[)
   {
     ]b4_percent_code_get([[init]])[
     $this->yylexer = new YYLexer(]b4_lex_param_call[);
