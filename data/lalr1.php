@@ -322,7 +322,7 @@ b4_lexer_if([[
     }
 
     // Print the state stack on the debug stream.
-    public function print ($out)
+    public function printStack ($out)
     {
       $out->print ("Stack now");
 
@@ -517,7 +517,7 @@ m4_popdef([b4_at_dollar])])dnl
       case self::YYNEWSTATE:
         self::yycdebug ("Entering state " . $yystate . "\n");
         if ($this->yydebug > 0)
-          $yystack->print ($this->yyDebugStream);
+          $yystack->printStack ($this->yyDebugStream);
 
         /* Accept?  */
         if ($yystate == self::yyfinal_)
@@ -689,7 +689,7 @@ m4_popdef([b4_at_dollar])])dnl
             $yystack->pop ();
             $yystate = $yystack->stateAt (0);
             if ($this->yydebug > 0)
-              $yystack->print ($this->yyDebugStream);
+              $yystack->printStack ($this->yyDebugStream);
           }
 
         ]b4_locations_if([
