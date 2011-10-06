@@ -672,7 +672,7 @@ m4_popdef([b4_at_dollar])])dnl
             $yyn = $this->yypact_[$yystate];
             if (!self::yy_pact_value_is_default_ ($yyn))
               {
-                $yyn += self:yyterror_;
+                $yyn += self::yyterror_;
                 if (0 <= $yyn && $yyn <= self::yylast_ && $this->yycheck_[$yyn] == self::yyterror_)
                   {
                     $yyn = $this->yytable_[$yyn];
