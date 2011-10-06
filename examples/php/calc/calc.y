@@ -5,50 +5,29 @@
 
 %error-verbose %locations %lex-param { $is }
 
-/* Bison Declarations */
-%token <Integer> NUM "number"
-%type  <Integer> exp
-
-%nonassoc '=' /* comparison            */
+/* Grammar follows */
+%token NUM
 %left '-' '+'
 %left '*' '/'
-%left NEG     /* negation--unary minus */
-%right '^'    /* exponentiation        */
+%right '^'    /* exponentiation */
 
-/* Grammar follows */
-%%
-input:
-  line
-| input line
+%% /* The grammar follows.  */
+input:    /* empty */
+        | input line
 ;
 
-line:
-  '\n'
-| exp '\n'
-| error '\n'
+line:     '\n'
+        | exp '\n'  { printf ("\t%.10g\n", $1); }
 ;
 
-exp:
-  NUM                { $$ = $1;                                             }
-| exp '=' exp
-  {
-    if ($1 != $3)
-      self::yyerror (@$, "calc: error: " . $1 . " != " . $3);
-  }
-| exp '+' exp        { $$ = ($1 + $3);  }
-| exp '-' exp        { $$ = ($1 - $3);  }
-| exp '*' exp        { $$ = ($1 * $3);  }
-| exp '/' exp        { $$ = ($1 / $3);  }
-| '-' exp  %prec NEG { $$ = (-$2);                  }
-| exp '^' exp        { $$ = ((int) pow ($1,
-                                             $3));  }
-| '(' exp ')'        { $$ = $2;                                             }
-| '(' error ')'      { $$ = (1111);                             }
-| '!'                { $$ = (0); return self::YYERROR;                }
-| '-' error          { $$ = (0); return self::YYERROR;                }
+exp:      NUM                { $$ = $1;           }
+        | exp '+' exp        { $$ = $1 + $3;      }
+        | exp '-' exp        { $$ = $1 - $3;      }
+        | exp '*' exp        { $$ = $1 * $3;      }
+        | exp '/' exp        { $$ = $1 / $3;      }
+        | exp '^' exp        { $$ = pow ($1, $3); }
+        | '(' exp ')'        { $$ = $2;           }
 ;
-
-
 %code lexer {
 
   private $buffer;
@@ -59,7 +38,6 @@ exp:
     $this->buffer = stream_get_contents ($is);
     $this->yypos = new Position (1, 0);
   }
-
 
   public function getStartPos() {
     return $this->yypos;
@@ -77,42 +55,41 @@ exp:
       fprintf (STDERR, "%s: %s\n", $l->toString (), $s);
   }
 
-
   private $yylval;
 
   public function getLVal() {
     return $this->yylval;
   }
 
-    public function yylex ()
-      {
-        $this->yypos = new Position ($this->yypos->lineno (), $this->yypos->token () + 1);
+  public function yylex ()
+    {
+      $this->yypos = new Position ($this->yypos->lineno (), $this->yypos->token () + 1);
 
-        $this->buffer = preg_replace ("/^[\\t ]+/", "", $this->buffer);
+      $this->buffer = preg_replace ("/^[\\t ]+/", "", $this->buffer);
 
-        if (strlen ($this->buffer) == 0)
-          return Lexer::EOF;
+      if (strlen ($this->buffer) == 0)
+        return Lexer::EOF;
+      else
+        if (substr ($this->buffer, 0, 1) == "\n")
+          {
+            $this->yypos = new Position ($this->yypos->lineno () + 1, 0);
+            $this->buffer = substr ($this->buffer, 1);
+            return ord ("\n");
+          }
         else
-          if (substr ($this->buffer, 0, 1) == "\n")
+          if (preg_match ("/^([0-9]+)/", $this->buffer, $matches))
             {
-              $this->yypos = new Position ($this->yypos->lineno () + 1, 0);
-              $this->buffer = substr ($this->buffer, 1);
-              return ord ("\n");
+              $this->yylval = $matches [1];
+              $this->buffer = substr ($this->buffer, strlen ($matches [1]));
+              return self::NUM;
             }
           else
-            if (preg_match ("/^([0-9]+)/", $this->buffer, $matches))
-              {
-                $this->yylval = $matches [1];
-                $this->buffer = substr ($this->buffer, strlen ($matches [1]));
-                return self::NUM;
-              }
-            else
-              {
-                $tt = substr ($this->buffer, 0, 1);
-                $this->buffer = substr ($this->buffer, 1);
-                return ord ($tt);
-              }
-      }
+            {
+              $tt = substr ($this->buffer, 0, 1);
+              $this->buffer = substr ($this->buffer, 1);
+              return ord ($tt);
+            }
+    }
 };
 %%
 class Position {
@@ -146,22 +123,5 @@ class Position {
   }
 }
 
-$data = "1 + 2 = 3\n1 + 2 = 4\n";
-$p = new Calc (fopen('data:text/plain,'.urlencode($data), 'rb'));
-# $p = new Calc (STDIN);
-// $p->setDebugLevel (255);
+$p = new Calc (STDIN);
 $p->parse ();
-/* $l = new YYLexer (fopen('data:text/plain,'.urlencode($data), 'rb')); */
-/* do */
-/*   { */
-/*       $Token = $l->yylex (); */
-/*     $Value =$l->getLVal (); */
-/*   var_dump ($Token, $Value); */
-/* } while ($Token !== Lexer::EOF); */
-/* exit; */
-
-//* public static void main (String args[]) throws IOException */
-  /* { */
-  /*   new Calc (System.in).parse (); */
-  /* } */
-
