@@ -499,7 +499,7 @@ should be configur-/prefixable.
 *** final/static modifiers
 
 All final/static modifiers have been removed.  Does that make sense
-for PHP?
+in PHP?
 
 *** Constants
 
@@ -521,8 +521,6 @@ Is there a GNU style?  A PHP style?  Otherwise, use MediaWiki's.
 ** PHP has no types with ranges, but one Number type. How to deal with that?
 
 ** Properly escape "$" in $yytname_
-
-This is a syntax error in PHP.
 
 ** Documentation
 
