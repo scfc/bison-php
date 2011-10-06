@@ -110,7 +110,7 @@ b4_locations_if([[
       if ($this->begin->equals ($this->end))
         return $this->begin->toString ();
       else
-        return $this->begin->toString () + "-" + $this->end->toString ();
+        return $this->begin->toString () . "-" . $this->end->toString ();
     }
   }
 
@@ -457,10 +457,10 @@ b4_lexer_if([[
                                  b4_locations_if([, $yylocationp])[)
   {
     if ($this->yydebug > 0)
-    self::yycdebug ($s + ($yytype < self::yyntokens_ ? " token " : " nterm ")
-              + $this->yytname_[$yytype] + " ("]b4_locations_if([
-              + $yylocationp + ": "])[
-              + ($yyvaluep == null ? "(null)" : $yyvaluep->toString ()) + ")");
+    self::yycdebug ($s . ($yytype < self::yyntokens_ ? " token " : " nterm ")
+              . $this->yytname_[$yytype] . " ("]b4_locations_if([
+              . $yylocationp . ": "])[
+              . ($yyvaluep == null ? "(null)" : $yyvaluep->toString ()) . ")");
   }
 
   /**
@@ -515,7 +515,7 @@ m4_popdef([b4_at_dollar])])dnl
         /* New state.  Unlike in the C/C++ skeletons, the state is already
            pushed when we come here.  */
       case self::YYNEWSTATE:
-        self::yycdebug ("Entering state " + $yystate + "\n");
+        self::yycdebug ("Entering state " . $yystate . "\n");
         if ($this->yydebug > 0)
           $yystack->print ($this->yyDebugStream);
 
@@ -838,12 +838,12 @@ m4_popdef([b4_at_dollar])])dnl
     $yylno = $this->yyrline_[$yyrule];
     $yynrhs = $this->yyr2_[$yyrule];
     /* Print the symbols being reduced, and their result.  */
-    self::yycdebug ("Reducing stack by rule " + ($yyrule - 1)
-              + " (line " + $yylno + "), ");
+    self::yycdebug ("Reducing stack by rule " . ($yyrule - 1)
+              . " (line " . $yylno . "), ");
 
     /* The symbols being reduced.  */
     for ($yyi = 0; $yyi < $yynrhs; $yyi++)
-      self::yy_symbol_print ("   \$" + ($yyi + 1) + " =",
+      self::yy_symbol_print ("   \$" . ($yyi + 1) . " =",
                        $this->yystos_[$yystack->stateAt($yyi + 1 - $yynrhs)],
                        ]b4_rhs_value($yynrhs, $yyi + 1)b4_locations_if([,
                        b4_rhs_location($yynrhs, $yyi + 1)])[);
