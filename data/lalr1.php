@@ -33,7 +33,6 @@ b4_symbol_foreach([b4_symbol_no_destructor_assert])
 m4_divert_push(0)dnl
 @output(b4_parser_file_name@)@
 <?php
-error_reporting (-1);   /* FIXME: Only for debugging. */
 b4_copyright([Skeleton implementation for Bison LALR(1) parsers in PHP],
              [2007-2011])
 
@@ -255,7 +254,7 @@ b4_lexer_if([[
    * Set the <tt>PrintStream</tt> on which the debug output is printed.
    * @@param $s The stream that is used for debugging output.
    */
-  public function setDebugStream ($s) { $this->yyDebugStream = $s; }
+  public function setDebugStream($s) { $this->yyDebugStream = $s; }
 
   private $yydebug = 0;
 
@@ -358,7 +357,7 @@ b4_lexer_if([[
         default: break;
       }
 
-    self::yy_symbol_print ("-> $$ =", $this->yyr1_[$yyn], $yyval]b4_locations_if([, $yyloc])[);
+    self::yy_symbol_print ("-> \$\$ =", $this->yyr1_[$yyn], $yyval]b4_locations_if([, $yyloc])[);
 
     $yystack->pop ($yylen);
     $yylen = 0;
@@ -419,7 +418,7 @@ b4_lexer_if([[
 
   private function yy_symbol_print ($s, $yytype,
                                  $yyvaluep]dnl
-b4_locations_if([, $yylocationp])[)
+                                 b4_locations_if([, $yylocationp])[)
   {
     if ($this->yydebug > 0)
     self::yycdebug ($s . ($yytype < self::yyntokens_ ? " token " : " nterm ")
@@ -456,13 +455,8 @@ b4_locations_if([, $yylocationp])[)
     /// ]b4_location_type[ of the lookahead.
     $yylloc = new ]b4_location_type[ (null, null);
 
-    /// @@$.
-    ]b4_comment([b4_location_type[ $yyloc;])])
-
     /// Semantic value of the lookahead.
     [$yylval = null;
-
-    /*int yyresult;*/
 
     self::yycdebug ("Starting parse\n");
     $this->yyerrstatus_ = 0;
@@ -506,7 +500,7 @@ m4_popdef([b4_at_dollar])])dnl
           {
             self::yycdebug ("Reading a token: ");
             $yychar = $this->yylexer->yylex ();]
-b4_locations_if([[
+            b4_locations_if([[
             $yylloc = new ]b4_location_type[($this->yylexer->getStartPos (),
                             $this->yylexer->getEndPos ());]])
             $yylval = $this->yylexer->getLVal ();[
@@ -662,7 +656,7 @@ b4_locations_if([[
               $yystack->printStack ($this->yyDebugStream);
           }
 
-]b4_locations_if([
+        ]b4_locations_if([
         /* Muck with the stack to setup for yylloc.  */
         $yystack->push (0, null, $yylloc);
         $yystack->push (0, null, $yyerrloc);
@@ -728,7 +722,9 @@ b4_locations_if([[
           {
             // FIXME: This method of building the message is not compatible
             // with internationalization.
-            $res = "syntax error, unexpected " . self::yytnamerr_ ($this->yytname_[$tok]);
+            $res =
+              "syntax error, unexpected ";
+            $res .= self::yytnamerr_ ($this->yytname_[$tok]);
             $yyn = $this->yypact_[$yystate];
             if (!self::yy_pact_value_is_default_ ($yyn))
               {
@@ -739,7 +735,7 @@ b4_locations_if([[
                 $yyxbegin = $yyn < 0 ? -$yyn : 0;
                 /* Stay within bounds of both yycheck and yytname.  */
                 $yychecklim = self::yylast_ - $yyn + 1;
-                $yyxend = min ($yychecklim, self::yyntokens_);
+                $yyxend = $yychecklim < self::yyntokens_ ? $yychecklim : self::yyntokens_;
                 $count = 0;
                 for ($x = $yyxbegin; $x < $yyxend; ++$x)
                   if ($this->yycheck_[$x + $yyn] == $x && $x != self::yyterror_
