@@ -151,11 +151,10 @@ m4_map([b4_token_enum], [$@])])
 
 # b4-case(ID, CODE)
 # -----------------
-# We need to fool Java's stupid unreachable code detection.
 m4_define([b4_case], [  case $1:
   $2;
   break;
-])
+    ])
 
 # b4_predicate_case(LABEL, CONDITIONS)
 # ------------------------------------

@@ -20,12 +20,12 @@ m4_include(b4_pkgdatadir/[php.m4])
 b4_defines_if([b4_fatal([%s: %%defines is not implemented for PHP],
               [b4_skeleton])])
 
-# We don't depend on %debug in Java, but pacify warnings about non-used flags.
+# We don't depend on %debug in PHP, but pacify warnings about non-used flags.
 b4_parse_trace_if([0], [0])
 
 m4_define([b4_symbol_no_destructor_assert],
 [b4_symbol_if([$1], [has_destructor],
-              [b4_fatal([%s: %s: %%destructor does not make sense in Java],
+              [b4_fatal([%s: %s: %%destructor does not make sense in PHP],
                         [b4_skeleton],
                         [b4_symbol_action_location([$1], [destructor])])])])
 b4_symbol_foreach([b4_symbol_no_destructor_assert])
