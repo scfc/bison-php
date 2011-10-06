@@ -199,7 +199,7 @@ b4_lexer_if([[
     ]b4_parse_param_cons[
   }
 
-  private $yyDebugStream = System.err;
+  private $yyDebugStream = STDERR;
 
   /**
    * Return the <tt>PrintStream</tt> on which the debugging output is
@@ -260,7 +260,7 @@ b4_lexer_if([[
 
   [protected function yycdebug ($s) {
     if ($this->yydebug > 0)
-      $this->yyDebugStream->println ($s);
+      fprintf ($this->yyDebugStream, "%s\n", $s);
   }
 
   final class YYStack {
@@ -324,14 +324,11 @@ b4_lexer_if([[
     // Print the state stack on the debug stream.
     public function printStack ($out)
     {
-      $out->print ("Stack now");
+      fputs ($out, "Stack now");
 
       for ($i = 0; $i <= $this->height; $i++)
-        {
-          $out->print (' ');
-          $out->print ($this->stateStack[$i]);
-        }
-      $out->println ();
+        fprintf ($out, " %d", $this->stateStack [$i]);
+      fputs ($out, "\n");
     }
   }
 
