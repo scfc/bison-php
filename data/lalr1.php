@@ -421,7 +421,7 @@ b4_lexer_if([[
   {
     if ($yystr->charAt (0) == '"')
       {
-        $yyr = new StringBuffer ();
+        $yyr = "";
         strip_quotes: for ($i = 1; $i < $yystr->length (); $i++)
           switch ($yystr->charAt ($i))
             {
@@ -434,11 +434,11 @@ b4_lexer_if([[
                 break strip_quotes;
               /* Fall through.  */
             default:
-              $yyr->append ($yystr->charAt ($i));
+              $yyr .= $yystr->charAt ($i);
               break;
 
             case '"':
-              return $yyr->toString ();
+              return $yyr;
             }
       }
     else if ($yystr->equals ("\$end"))
@@ -759,8 +759,8 @@ m4_popdef([b4_at_dollar])])dnl
             // FIXME: This method of building the message is not compatible
             // with internationalization.
             $res =
-              new StringBuffer ("syntax error, unexpected ");
-            $res->append (self::yytnamerr_ ($this->yytname_[$tok]));
+              "syntax error, unexpected ";
+            $res .= self::yytnamerr_ ($this->yytname_[$tok]);
             $yyn = $this->yypact_[$yystate];
             if (!self::yy_pact_value_is_default_ ($yyn))
               {
@@ -784,12 +784,12 @@ m4_popdef([b4_at_dollar])])dnl
                       if ($this->yycheck_[$x + $yyn] == $x && $x != self::yyterror_
                           && !self::yy_table_value_is_error_ ($this->yytable_[$x + $yyn]))
                         {
-                          $res->append ($count++ == 0 ? ", expecting " : " or ");
-                          $res->append (self::yytnamerr_ ($this->yytname_[$x]));
+                          $res .= $count++ == 0 ? ", expecting " : " or ";
+                          $res .= self::yytnamerr_ ($this->yytname_[$x]);
                         }
                   }
               }
-            return $res->toString ();
+            return $res;
           }
       }
 ]])[
