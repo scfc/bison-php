@@ -394,19 +394,19 @@ b4_lexer_if([[
         default: break;
       }
 
-    yy_symbol_print ("-> $$ =", yyr1_[yyn], yyval]b4_locations_if([, yyloc])[);
+    yy_symbol_print ("-> $$ =", $this->yyr1_[yyn], yyval]b4_locations_if([, yyloc])[);
 
     yystack.pop (yylen);
     yylen = 0;
 
     /* Shift the result of the reduction.  */
-    yyn = yyr1_[yyn];
-    int yystate = yypgoto_[yyn - self::yyntokens_] + yystack.stateAt (0);
+    yyn = $this->yyr1_[yyn];
+    int yystate = $this->yypgoto_[yyn - self::yyntokens_] + yystack.stateAt (0);
     if (0 <= yystate && yystate <= self::yylast_
-        && yycheck_[yystate] == yystack.stateAt (0))
-      yystate = yytable_[yystate];
+        && $this->yycheck_[yystate] == yystack.stateAt (0))
+      yystate = $this->yytable_[yystate];
     else
-      yystate = yydefgoto_[yyn - self::yyntokens_];
+      yystate = $this->yydefgoto_[yyn - self::yyntokens_];
 
     yystack.push (yystate, yyval]b4_locations_if([, yyloc])[);
     return self::YYNEWSTATE;
@@ -459,7 +459,7 @@ b4_lexer_if([[
   {
     if (yydebug > 0)
     yycdebug (s + (yytype < self::yyntokens_ ? " token " : " nterm ")
-              + yytname_[yytype] + " ("]b4_locations_if([
+              + $this->yytname_[yytype] + " ("]b4_locations_if([
               + yylocationp + ": "])[
               + (yyvaluep == null ? "(null)" : yyvaluep.toString ()) + ")");
   }
@@ -530,7 +530,7 @@ m4_popdef([b4_at_dollar])])dnl
           return true;
 
         /* Take a decision.  First try without lookahead.  */
-        yyn = yypact_[yystate];
+        yyn = $this->yypact_[yystate];
         if (yy_pact_value_is_default_ (yyn))
           {
             label = self::YYDEFAULT;
@@ -564,11 +564,11 @@ m4_popdef([b4_at_dollar])])dnl
         /* If the proper action on seeing token YYTOKEN is to reduce or to
            detect an error, take that action.  */
         yyn += yytoken;
-        if (yyn < 0 || self::yylast_ < yyn || yycheck_[yyn] != yytoken)
+        if (yyn < 0 || self::yylast_ < yyn || $this->yycheck_[yyn] != yytoken)
           label = self::YYDEFAULT;
 
         /* <= 0 means reduce or error.  */
-        else if ((yyn = yytable_[yyn]) <= 0)
+        else if ((yyn = $this->yytable_[yyn]) <= 0)
           {
             if (yy_table_value_is_error_ (yyn))
               label = self::YYERRLAB;
@@ -603,7 +603,7 @@ m4_popdef([b4_at_dollar])])dnl
       | yydefault -- do the default action for the current state.  |
       `-----------------------------------------------------------*/
       case self::YYDEFAULT:
-        yyn = yydefact_[yystate];
+        yyn = $this->yydefact_[yystate];
         if (yyn == 0)
           label = self::YYERRLAB;
         else
@@ -614,7 +614,7 @@ m4_popdef([b4_at_dollar])])dnl
       | yyreduce -- Do a reduction.  |
       `-----------------------------*/
       case self::YYREDUCE:
-        yylen = yyr2_[yyn];
+        yylen = $this->yyr2_[yyn];
         label = yyaction (yyn, yystack, yylen);
         yystate = yystack.stateAt (0);
         break;
@@ -675,13 +675,13 @@ m4_popdef([b4_at_dollar])])dnl
 
         for (;;)
           {
-            yyn = yypact_[yystate];
+            yyn = $this->yypact_[yystate];
             if (!yy_pact_value_is_default_ (yyn))
               {
                 yyn += self:yyterror_;
-                if (0 <= yyn && yyn <= self::yylast_ && yycheck_[yyn] == self::yyterror_)
+                if (0 <= yyn && yyn <= self::yylast_ && $this->yycheck_[yyn] == self::yyterror_)
                   {
-                    yyn = yytable_[yyn];
+                    yyn = $this->yytable_[yyn];
                     if (0 < yyn)
                       break;
                   }
@@ -706,7 +706,7 @@ m4_popdef([b4_at_dollar])])dnl
         yystack.pop (2);])[
 
         /* Shift the error token.  */
-        yy_symbol_print ("Shifting", yystos_[yyn],
+        yy_symbol_print ("Shifting", $this->yystos_[yyn],
                          yylval]b4_locations_if([, yyloc])[);
 
         yystate = yyn;
@@ -766,8 +766,8 @@ m4_popdef([b4_at_dollar])])dnl
             // with internationalization.
             StringBuffer res =
               new StringBuffer ("syntax error, unexpected ");
-            res.append (yytnamerr_ (yytname_[tok]));
-            int yyn = yypact_[yystate];
+            res.append (yytnamerr_ ($this->yytname_[tok]));
+            int yyn = $this->yypact_[yystate];
             if (!yy_pact_value_is_default_ (yyn))
               {
                 /* Start YYX at -YYN if negative to avoid negative
@@ -780,18 +780,18 @@ m4_popdef([b4_at_dollar])])dnl
                 int yyxend = yychecklim < self::yyntokens_ ? yychecklim : self::yyntokens_;
                 int count = 0;
                 for (int x = yyxbegin; x < yyxend; ++x)
-                  if (yycheck_[x + yyn] == x && x != self::yyterror_
-                      && !yy_table_value_is_error_ (yytable_[x + yyn]))
+                  if ($this->yycheck_[x + yyn] == x && x != self::yyterror_
+                      && !yy_table_value_is_error_ ($this->yytable_[x + yyn]))
                     ++count;
                 if (count < 5)
                   {
                     count = 0;
                     for (int x = yyxbegin; x < yyxend; ++x)
-                      if (yycheck_[x + yyn] == x && x != self::yyterror_
-                          && !yy_table_value_is_error_ (yytable_[x + yyn]))
+                      if ($this->yycheck_[x + yyn] == x && x != self::yyterror_
+                          && !yy_table_value_is_error_ ($this->yytable_[x + yyn]))
                         {
                           res.append (count++ == 0 ? ", expecting " : " or ");
-                          res.append (yytnamerr_ (yytname_[x]));
+                          res.append (yytnamerr_ ($this->yytname_[x]));
                         }
                   }
               }
@@ -841,8 +841,8 @@ m4_popdef([b4_at_dollar])])dnl
     if (yydebug == 0)
       return;
 
-    int yylno = yyrline_[yyrule];
-    int yynrhs = yyr2_[yyrule];
+    int yylno = $this->yyrline_[yyrule];
+    int yynrhs = $this->yyr2_[yyrule];
     /* Print the symbols being reduced, and their result.  */
     yycdebug ("Reducing stack by rule " + (yyrule - 1)
               + " (line " + yylno + "), ");
@@ -850,7 +850,7 @@ m4_popdef([b4_at_dollar])])dnl
     /* The symbols being reduced.  */
     for (int yyi = 0; yyi < yynrhs; yyi++)
       yy_symbol_print ("   $" + (yyi + 1) + " =",
-                       yystos_[yystack.stateAt(yyi + 1 - yynrhs)],
+                       $this->yystos_[yystack.stateAt(yyi + 1 - yynrhs)],
                        ]b4_rhs_value(yynrhs, yyi + 1)b4_locations_if([,
                        b4_rhs_location(yynrhs, yyi + 1)])[);
   }
@@ -861,7 +861,7 @@ m4_popdef([b4_at_dollar])])dnl
   private static final ]b4_int_type_for([b4_translate])[ yytranslate_ (int t)
   {
     if (t >= 0 && t <= self::yyuser_token_number_max_)
-      return yytranslate_table_[t];
+      return $this->yytranslate_table_[t];
     else
       return self::yyundef_token_;
   }
