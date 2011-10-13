@@ -61,13 +61,6 @@ m4_define([b4_final_if],
 [b4_percent_define_flag_if([final], [$1], [$2])])
 
 
-# b4_strictfp_if(TRUE, FALSE)
-# ---------------------------
-b4_percent_define_default([[strictfp]], [[false]])
-m4_define([b4_strictfp_if],
-[b4_percent_define_flag_if([strictfp], [$1], [$2])])
-
-
 # b4_lexer_if(TRUE, FALSE)
 # ------------------------
 m4_define([b4_lexer_if],
