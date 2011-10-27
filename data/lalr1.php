@@ -231,7 +231,7 @@ b4_percent_define_get3([implements], [ implements ])[
   private function yylloc (YYStack $rhs, $n)
   {
     if ($n > 0)
-      return new ]b4_location_type[ ($rhs->locationAt (n-1)->begin, $rhs->locationAt (0)->end);
+      return new ]b4_location_type[ ($rhs->locationAt ($n-1)->begin, $rhs->locationAt (0)->end);
     else
       return new ]b4_location_type[ ($rhs->locationAt (0)->end);
   }]])[
