@@ -444,6 +444,8 @@ should be configur-/prefixable.
 
 Is there a GNU style?  A PHP style?  Otherwise, use MediaWiki's.
 
+** PHP has no types with ranges, but one Number type.  How to deal with that?
+
 ** Properly escape "$" in $yytname_
 
 ** Documentation
