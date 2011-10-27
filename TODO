@@ -407,6 +407,21 @@ Here's a proposal for how a new implementation might look:
 
 ** Review generated code thoroughly
 
+*** Define PHP requirement
+
+What version of PHP should the generated code comply with?
+
+*** Robustness
+
+Typos (including confusing "$" and "$this->" for variables and "" and
+"self::"" for functions/methods) are a PITA with PHP.  Without full
+code coverage in testing, these may not be noticed.  A pedantic lint
+may be useful.
+
+*** Lexer interface
+
+Is the interface suitable for typical use cases?
+
 *** final/static modifiers
 
 All final/static modifiers have been removed.  Does that make sense
@@ -425,7 +440,15 @@ should be configur-/prefixable.
 
 ** "<?php" should probably be configur-/switchable
 
+** Indentation
+
+Is there a GNU style?  A PHP style?  Otherwise, use MediaWiki's.
+
 ** Properly escape "$" in $yytname_
+
+** Documentation
+
+** Examples
 
 -----
 
