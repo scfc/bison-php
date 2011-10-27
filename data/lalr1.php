@@ -121,15 +121,16 @@ class ]b4_location_type[ {
         return $this->begin->toString () . "-" . $this->end->toString ();
     }
   }
+
 ]])[
 ]b4_lexer_if([[class YYLexer implements Lexer {
 ]b4_percent_code_get([[lexer]])[
   }
 ]])[
 class YYStack {
-    private $stateStack = array ();
-    ]b4_locations_if([[private $locStack   = array ();]])[
-    private $valueStack = array ();
+    private $stateStack = array();
+    ]b4_locations_if([[private $locStack = array();]])[
+    private $valueStack = array();
 
     public $height = -1;
 
@@ -199,7 +200,7 @@ b4_percent_define_get3([implements], [ implements ])[
   { $this->yyErrorVerbose = $verbose; }
 ]])
 
-b4_locations_if([[
+  b4_locations_if([[
   private function yylloc (YYStack $rhs, $n)
   {
     if ($n > 0)
@@ -210,8 +211,8 @@ b4_locations_if([[
 
   /** The object doing lexical analysis for us.  */
   private $yylexer;
-]
-b4_parse_param_vars
+  ]
+  b4_parse_param_vars
 
 b4_lexer_if([[
   /**
@@ -219,15 +220,16 @@ b4_lexer_if([[
    */
   public function __construct (]b4_parse_param_decl([b4_lex_param_decl])[)
   {
-]b4_percent_code_get([[init]])[
+    ]b4_percent_code_get([[init]])[
     $this->yylexer = new YYLexer(]b4_lex_param_call[);
-]b4_parse_param_cons[  }
+    ]b4_parse_param_cons[
+  }
 ]],[
   /**
    * Instantiates the Bison-generated parser.
    * @@param $yylexer The scanner that will supply tokens to the parser.
    */
-  b4_lexer_if([[protected]], [[public]]) b4_parser_class_name[ (]b4_parse_param_decl([[Lexer yylexer]])[)
+  b4_lexer_if([[protected]], [[public]]) b4_parser_class_name[ (]b4_parse_param_decl([[Lexer $yylexer]])[)
   {
     ]b4_percent_code_get([[init]])[
     $this->yylexer = $yylexer;
