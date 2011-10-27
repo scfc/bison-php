@@ -89,12 +89,12 @@ b4_percent_code_get([[imports]])
      function yyerror (]b4_locations_if([b4_location_type[ $loc, ]])[$msg);
   }
 ]b4_locations_if([[
-/**
- * A class defining a pair of positions.  Positions, defined by the
- * <code>]b4_position_type[</code> class, denote a point in the input.
- * Locations represent a part of the input through the beginning
- * and ending positions.  */
-class ]b4_location_type[ {
+  /**
+   * A class defining a pair of positions.  Positions, defined by the
+   * <code>]b4_position_type[</code> class, denote a point in the input.
+   * Locations represent a part of the input through the beginning
+   * and ending positions.  */
+  class ]b4_location_type[ {
     /** The first, inclusive, position in the range.  */
     public $begin;
 
