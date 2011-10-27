@@ -46,6 +46,49 @@ b4_percent_code_get([[imports]])
  *
  * @@author LALR (1) parser skeleton written by Paolo Bonzini.
  */
+
+  /**
+   * Communication interface between the scanner and the Bison-generated
+   * parser <tt>]b4_parser_class_name[</tt>.
+   */
+  interface Lexer {
+    /** Token returned by the scanner to signal the end of its input.  */
+    const EOF = 0;
+
+]b4_token_enums(b4_tokens)[
+
+    ]b4_locations_if([[/**
+     * Method to retrieve the beginning position of the last scanned token.
+     * @@return the position at which the last scanned token starts.  */
+    function getStartPos ();
+
+    /**
+     * Method to retrieve the ending position of the last scanned token.
+     * @@return the first position beyond the last scanned token.  */
+    function getEndPos ();]])[
+
+    /**
+     * Method to retrieve the semantic value of the last scanned token.
+     * @@return the semantic value of the last scanned token.  */
+    function getLVal ();
+
+    /**
+     * Entry point for the scanner.  Returns the token identifier corresponding
+     * to the next token and prepares to return the semantic value
+     * ]b4_locations_if([and beginning/ending positions ])[of the token.
+     * @@return the token identifier corresponding to the next token. */
+    function yylex ();
+
+    /**
+     * Entry point for error reporting.  Emits an error
+     * ]b4_locations_if([referring to the given location ])[in a user-defined way.
+     *
+     * ]b4_locations_if([[@@param $loc The location of the element to which the
+     *                error message is related]])[
+     * @@param $msg The string for the error message.  */
+     function yyerror (]b4_locations_if([b4_location_type[ $loc, ]])[$msg);]
+  }
+
 ]b4_percent_define_get3([annotations], [], [ ])dnl
 b4_abstract_if([abstract ])dnl
 b4_final_if([final ])dnl
@@ -123,49 +166,6 @@ b4_locations_if([[
     else
       return new ]b4_location_type[ ($rhs->locationAt (0)->end);
   }]])[
-
-  /**
-   * Communication interface between the scanner and the Bison-generated
-   * parser <tt>]b4_parser_class_name[</tt>.
-   */
-  interface Lexer {
-    /** Token returned by the scanner to signal the end of its input.  */
-    const EOF = 0;
-
-]b4_token_enums(b4_tokens)[
-
-    ]b4_locations_if([[/**
-     * Method to retrieve the beginning position of the last scanned token.
-     * @@return the position at which the last scanned token starts.  */
-    function getStartPos ();
-
-    /**
-     * Method to retrieve the ending position of the last scanned token.
-     * @@return the first position beyond the last scanned token.  */
-    function getEndPos ();]])[
-
-    /**
-     * Method to retrieve the semantic value of the last scanned token.
-     * @@return the semantic value of the last scanned token.  */
-    function getLVal ();
-
-    /**
-     * Entry point for the scanner.  Returns the token identifier corresponding
-     * to the next token and prepares to return the semantic value
-     * ]b4_locations_if([and beginning/ending positions ])[of the token.
-     * @@return the token identifier corresponding to the next token. */
-    function yylex ();
-
-    /**
-     * Entry point for error reporting.  Emits an error
-     * ]b4_locations_if([referring to the given location ])[in a user-defined way.
-     *
-     * ]b4_locations_if([[@@param $loc The location of the element to which the
-     *                error message is related]])[
-     * @@param $msg The string for the error message.  */
-     function yyerror (]b4_locations_if([b4_location_type[ $loc, ]])[$msg);]
-  }
-
   b4_lexer_if([[class YYLexer implements Lexer {
 ]b4_percent_code_get([[lexer]])[
   }
