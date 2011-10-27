@@ -418,16 +418,16 @@ b4_lexer_if([[
     if (substr ($yystr, 0, 1) == '"')
       {
         $yyr = "";
-        strip_quotes: for ($i = 1; $i < strlen ($yystr); $i++)
+        for ($i = 1; $i < strlen ($yystr); $i++)
           switch (substr ($yystr, $i, 1))
             {
             case "'":
             case ',':
-              break strip_quotes;
+              break 2;
 
             case "\\":
               if (substr ($yystr, ++$i, 1) != "\\")
-                break strip_quotes;
+                break 2;
               /* Fall through.  */
             default:
               $yyr .= substr ($yystr, $i, 1);
