@@ -89,31 +89,6 @@ b4_percent_code_get([[imports]])
      function yyerror (]b4_locations_if([b4_location_type[ $loc, ]])[$msg);]
   }
 
-]b4_percent_define_get3([annotations], [], [ ])dnl
-b4_abstract_if([abstract ])dnl
-b4_final_if([final ])dnl
-[class ]b4_parser_class_name[]dnl
-b4_percent_define_get3([extends], [ extends ])dnl
-b4_percent_define_get3([implements], [ implements ])[
-{
-  ]b4_identification[
-]b4_error_verbose_if([[
-  /** True if verbose error messages are enabled.  */
-  private $yyErrorVerbose = true;
-
-  /**
-   * Return whether verbose error messages are enabled.
-   */
-  public function getErrorVerbose() { return $this->yyErrorVerbose; }
-
-  /**
-   * Set the verbosity of error messages.
-   * @@param $verbose True to request verbose error messages.
-   */
-  public function setErrorVerbose($verbose)
-  { $this->yyErrorVerbose = $verbose; }
-]])
-
 b4_locations_if([[
   /**
    * A class defining a pair of positions.  Positions, defined by the
@@ -156,6 +131,31 @@ b4_locations_if([[
     }
   }
 
+]])
+
+]b4_percent_define_get3([annotations], [], [ ])dnl
+b4_abstract_if([abstract ])dnl
+b4_final_if([final ])dnl
+[class ]b4_parser_class_name[]dnl
+b4_percent_define_get3([extends], [ extends ])dnl
+b4_percent_define_get3([implements], [ implements ])[
+{
+  ]b4_identification[
+]b4_error_verbose_if([[
+  /** True if verbose error messages are enabled.  */
+  private $yyErrorVerbose = true;
+
+  /**
+   * Return whether verbose error messages are enabled.
+   */
+  public function getErrorVerbose() { return $this->yyErrorVerbose; }
+
+  /**
+   * Set the verbosity of error messages.
+   * @@param $verbose True to request verbose error messages.
+   */
+  public function setErrorVerbose($verbose)
+  { $this->yyErrorVerbose = $verbose; }
 ]])
 
   b4_locations_if([[
