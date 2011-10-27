@@ -491,11 +491,6 @@ may be useful.
 
 Is the interface suitable for typical use cases?
 
-*** Namespace pollution
-
-All classes and interfaces in PHP are global, so all their names
-should be configur-/prefixable.
-
 *** final/static modifiers
 
 All final/static modifiers have been removed.  Does that make sense
@@ -507,18 +502,23 @@ Java's "private static final" semi-constants have been replaced by
 "self::const"s.  Is there some legitimate scenario where someone
 extends a parser class and shoots himself in the foot with that?
 
+*** Namespace pollution
+
+All classes and interfaces in PHP are global, so all their names
+should be configur-/prefixable.
+
 *** Overloaded methods
 
 The overloaded methods are emulated with default parameters and
 look *really* ugly.
 
+** "<?php" should probably be configur-/switchable
+
 ** Indentation
 
 Is there a GNU style?  A PHP style?  Otherwise, use MediaWiki's.
 
-** "<?php" should probably be configur/-switchable
-
-** PHP has no types with ranges, but one Number type. How to deal with that?
+** PHP has no types with ranges, but one Number type.  How to deal with that?
 
 ** Properly escape "$" in $yytname_
 

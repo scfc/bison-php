@@ -51,8 +51,7 @@ b4_percent_code_get([[imports]])
    * Communication interface between the scanner and the Bison-generated
    * parser <tt>]b4_parser_class_name[</tt>.
    */
-interface Lexer
-  {
+  interface Lexer {
     /** Token returned by the scanner to signal the end of its input.  */
     const EOF = 0;
 
@@ -127,24 +126,21 @@ class ]b4_location_type[ {
 ]b4_percent_code_get([[lexer]])[
   }
 ]])[
-class YYStack
-  {
+class YYStack {
     private $stateStack = array ();
     ]b4_locations_if([[private $locStack   = array ();]])[
     private $valueStack = array ();
 
     public $height = -1;
 
-    public function push ($state, $value]b4_locations_if([, ]b4_location_type[ $loc])[)
-      {
+    public function push ($state, $value]b4_locations_if([, ]b4_location_type[ $loc])[) {
         $this->height++;
         $this->stateStack [$this->height] = $state;
         ]b4_locations_if([[$this->locStack   [$this->height] = $loc;]])[
         $this->valueStack [$this->height] = $value;
       }
 
-    public function pop ($num = 1)
-      {
+    public function pop ($num = 1) {
         // Avoid memory leaks... garbage collection is a white lie!
         // @@@@FIXME@@@@: Assess this for PHP.
         while ($num-- > 0)
@@ -155,30 +151,27 @@ class YYStack
           }
       }
 
-    public function stateAt ($i)
-      {
-        return $this->stateStack [$this->height - $i];
-      }
+    public function stateAt ($i) {
+      return $this->stateStack[$this->height - $i];
+    }
 
-    ]b4_locations_if([[public function locationAt ($i)
-      {
-        return $this->locStack [$this->height - $i];
-      }
+    ]b4_locations_if([[public function locationAt ($i) {
+      return $this->locStack[$this->height - $i];
+    }
 
-    ]])[public function valueAt ($i)
-      {
-        return $this->valueStack [$this->height - $i];
-      }
+    ]])[public function valueAt ($i) {
+      return $this->valueStack[$this->height - $i];
+    }
 
     // Print the state stack on the debug stream.
     public function printStack ($out)
-      {
-        fputs ($out, "Stack now");
+    {
+      fputs ($out, "Stack now");
 
-        for ($i = 0; $i <= $this->height; $i++)
-          fprintf ($out, " %d", $this->stateStack [$i]);
-        fputs ($out, "\n");
-      }
+      for ($i = 0; $i <= $this->height; $i++)
+        fprintf ($out, " %d", $this->stateStack [$i]);
+      fputs ($out, "\n");
+    }
   }
 
 ]b4_percent_define_get3([annotations], [], [ ])dnl
@@ -423,7 +416,7 @@ b4_lexer_if([[
     self::yycdebug ($s . ($yytype < self::yyntokens_ ? " token " : " nterm ")
               . $this->yytname_[$yytype] . " ("]b4_locations_if([
               . $yylocationp->toString () . ": "])[
-              . (is_null ($yyvaluep) ? "(null)" : $yyvaluep) . ")");
+              . ($yyvaluep == null ? "(null)" : $yyvaluep) . ")");
   }
 
   /**
@@ -814,6 +807,7 @@ m4_popdef([b4_at_dollar])])dnl
 
   /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
   ]b4_integral_parser_table_define([translate_table], [b4_translate])[
+
   private function yytranslate_ ($t)
   {
     if ($t >= 0 && $t <= self::yyuser_token_number_max_)
