@@ -415,29 +415,29 @@ b4_lexer_if([[
      YYSTR is taken from yytname.  */
   private function yytnamerr_ ($yystr)
   {
-    if ($yystr->charAt (0) == '"')
+    if (substr ($yystr, 0, 1) == '"')
       {
         $yyr = "";
-        strip_quotes: for ($i = 1; $i < $yystr->length (); $i++)
-          switch ($yystr->charAt ($i))
+        strip_quotes: for ($i = 1; $i < strlen ($yystr); $i++)
+          switch (substr ($yystr, $i, 1))
             {
-            case '\'':
+            case "'":
             case ',':
               break strip_quotes;
 
-            case '\\':
-              if ($yystr->charAt(++$i) != '\\')
+            case "\\":
+              if (substr ($yystr, ++$i, 1) != "\\")
                 break strip_quotes;
               /* Fall through.  */
             default:
-              $yyr .= $yystr->charAt ($i);
+              $yyr .= substr ($yystr, $i, 1);
               break;
 
             case '"':
               return $yyr;
             }
       }
-    else if ($yystr->equals ("\$end"))
+    else if ($yystr == "\$end")
       return "end of input";
 
     return $yystr;
@@ -455,8 +455,8 @@ b4_lexer_if([[
     if ($this->yydebug > 0)
     self::yycdebug ($s . ($yytype < self::yyntokens_ ? " token " : " nterm ")
               . $this->yytname_[$yytype] . " ("]b4_locations_if([
-              . $yylocationp . ": "])[
-              . ($yyvaluep == null ? "(null)" : $yyvaluep->toString ()) . ")");
+              . $yylocationp->toString () . ": "])[
+              . ($yyvaluep == null ? "(null)" : $yyvaluep) . ")");
   }
 
   /**
