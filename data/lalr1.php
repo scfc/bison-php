@@ -134,23 +134,22 @@ class YYStack {
 
     public $height = -1;
 
-    public function push ($state, $value]b4_locations_if([, ]b4_location_type[ $loc])[) {
-        $this->height++;
-        $this->stateStack [$this->height] = $state;
-        ]b4_locations_if([[$this->locStack   [$this->height] = $loc;]])[
-        $this->valueStack [$this->height] = $value;
-      }
+    public function push ($state, $value]dnl
+                            b4_locations_if([, ]b4_location_type[ $loc])[) {
+      $this->height++;
+      $this->stateStack[$this->height] = $state;
+      ]b4_locations_if([[$this->locStack[$this->height] = $loc;]])[
+      $this->valueStack[$this->height] = $value;
+    }
 
     public function pop ($num = 1) {
-        // Avoid memory leaks... garbage collection is a white lie!
-        // @@@@FIXME@@@@: Assess this for PHP.
-        while ($num-- > 0)
-          {
-            unset ($this->valueStack [$this->height]);
-]b4_locations_if([[            unset ($this->locStack   [$this->height]);]])[
-            $this->height--;
-          }
+      // Avoid memory leaks... garbage collection is a white lie!
+      while ($num-- > 0) {
+        unset ($this->valueStack [$this->height]);
+]b4_locations_if([[        unset ($this->locStack   [$this->height]);]])[
+        $this->height--;
       }
+    }
 
     public function stateAt ($i) {
       return $this->stateStack[$this->height - $i];
