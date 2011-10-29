@@ -130,29 +130,11 @@ class YYStack {
     ]b4_locations_if([[private $locStack = array();]])[
     private $valueStack = array();
 
-    public $size = 16;
     public $height = -1;
 
     public function push ($state, $value]dnl
                             b4_locations_if([, ]b4_location_type[ $loc])[) {
       $this->height++;
-      if ($this->size == $this->height)
-        {
-          $newStateStack = array();
-          System.arraycopy ($this->stateStack, 0, $newStateStack, 0, $this->height);
-          $this->stateStack = $newStateStack;
-          ]b4_locations_if([[
-          $newLocStack = array();
-          System.arraycopy ($this->locStack, 0, $newLocStack, 0, $this->height);
-          $this->locStack = $newLocStack;]])
-
-          $newValueStack = array();
-          System.arraycopy ($this->valueStack, 0, $newValueStack, 0, $this->height);
-          $this->valueStack = $newValueStack;
-
-          $this->size *= 2;
-        }
-
       $this->stateStack[$this->height] = $state;
       ]b4_locations_if([[$this->locStack[$this->height] = $loc;]])[
       $this->valueStack[$this->height] = $value;
@@ -160,11 +142,11 @@ class YYStack {
 
     public function pop ($num = 1) {
       // Avoid memory leaks... garbage collection is a white lie!
-      if ($num > 0) {
-        java.util.Arrays.fill ($this->valueStack, $this->height - $num + 1, $this->height + 1, null);
-        ]b4_locations_if([[java.util.Arrays.fill ($this->locStack, $this->height - $num + 1, $this->height + 1, null);]])[
+      while ($num-- > 0) {
+        unset ($this->valueStack [$this->height]);
+]b4_locations_if([[        unset ($this->locStack   [$this->height]);]])[
+        $this->height--;
       }
-      $this->height -= $num;
     }
 
     public function stateAt ($i) {

@@ -443,6 +443,8 @@ should be configur-/prefixable.
 The overloaded methods are emulated with default parameters and
 look *really* ugly.
 
+*** Assess whether YYStack::pop must really unset the values.
+
 ** "<?php" should probably be configur-/switchable
 
 ** Indentation
