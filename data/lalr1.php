@@ -103,20 +103,12 @@ b4_locations_if([[
     public $end;
 
     /**
-     * Create a <code>]b4_location_type[</code> denoting an empty range located at
-     * a given point.
-     * @@param $loc The position at which the range is anchored.  */
-    public function __construct (]b4_position_type[ $loc) {
-      $this->begin = $this->end = $loc;
-    }
-
-    /**
      * Create a <code>]b4_location_type[</code> from the endpoints of the range.
-     * @@param $begin The first position included in the range.
-     * @@param $end   The first position beyond the range.  */
-    public function __construct (]b4_position_type[ $begin, ]b4_position_type[ $end) {
+     * @@param $begin The position at which the range is anchored.
+     * @@param $end   The first position beyond the range.  Defaults to $begin. */
+    public function __construct (]b4_position_type[ $begin = NULL, ]b4_position_type[ $end = NULL) {
       $this->begin = $begin;
-      $this->end = $end;
+      $this->end = is_null ($end) ? $begin : $end;
     }
 
     /**
@@ -166,11 +158,7 @@ class YYStack {
       $this->valueStack[$this->height] = $value;
     }
 
-    public function pop () {
-      self::pop (1);
-    }
-
-    public function pop ($num) {
+    public function pop ($num = 1) {
       // Avoid memory leaks... garbage collection is a white lie!
       if ($num > 0) {
         java.util.Arrays.fill ($this->valueStack, $this->height - $num + 1, $this->height + 1, null);
@@ -296,6 +284,19 @@ b4_lexer_if([[
    */
   public function setDebugLevel($level) { $this->yydebug = $level; }
 
+]b4_locations_if([[
+  /**
+   * Print an error message via the lexer.
+   * @@param $locpos The location/position associated with the message.
+   * @@param $msg The error message.
+   */
+  public function yyerror ($locpos, $msg = null)
+  {
+    if (is_null ($msg))
+      $this->yylexer->yyerror (null, $locpos);
+    else
+      $this->yylexer->yyerror ($locpos instanceof ]b4_location_type[ ? $locpos : new ]b4_location_type[ ($locpos), $msg);
+  }]],[[
   /**
    * Print an error message via the lexer.
    *]b4_locations_if([[ Use a <code>null</code> location.]])[
@@ -303,28 +304,9 @@ b4_lexer_if([[
    */
   public function yyerror ($msg)
   {
-    $this->yylexer->yyerror (]b4_locations_if([[(]b4_location_type[)null, ]])[$msg);
+    $this->yylexer->yyerror (]b4_locations_if([[()null, ]])[$msg);
   }
-]b4_locations_if([[
-  /**
-   * Print an error message via the lexer.
-   * @@param $loc The location associated with the message.
-   * @@param $msg The error message.
-   */
-  public function yyerror (]b4_location_type[ $loc, $msg)
-  {
-    $this->yylexer->yyerror ($loc, $msg);
-  }
-
-  /**
-   * Print an error message via the lexer.
-   * @@param $pos The position associated with the message.
-   * @@param $msg The error message.
-   */
-  public function yyerror (]b4_position_type[ $pos, $msg)
-  {
-    $this->yylexer->yyerror (new ]b4_location_type[ ($pos), $msg);
-  }]])
+]])
 
   [protected function yycdebug ($s) {
     if ($this->yydebug > 0)

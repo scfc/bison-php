@@ -438,6 +438,11 @@ extends a parser class and shoots himself in the foot with that?
 All classes and interfaces in PHP are global, so all their names
 should be configur-/prefixable.
 
+*** Overloaded methods
+
+The overloaded methods are emulated with default parameters and
+look *really* ugly.
+
 ** "<?php" should probably be configur-/switchable
 
 ** Indentation
