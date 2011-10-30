@@ -125,6 +125,12 @@ b4_locations_if([[
 
 ]])
 
+]b4_lexer_if([[class YYLexer implements Lexer {
+]b4_percent_code_get([[lexer]])[
+  }
+
+  ]])[
+
 class YYStack {
     private $stateStack = array();
     ]b4_locations_if([[private $locStack = array();]])[
@@ -205,11 +211,7 @@ b4_percent_define_get3([implements], [ implements ])[
     else
       return new ]b4_location_type[ ($rhs->locationAt (0)->end);
   }]])[
-  b4_lexer_if([[class YYLexer implements Lexer {
-]b4_percent_code_get([[lexer]])[
-  }
-
-  ]])[/** The object doing lexical analysis for us.  */
+  /** The object doing lexical analysis for us.  */
   private $yylexer;
   ]
   b4_parse_param_vars
