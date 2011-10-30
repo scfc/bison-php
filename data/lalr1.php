@@ -226,18 +226,18 @@ b4_lexer_if([[
     $this->yylexer = new YYLexer(]b4_lex_param_call[);
     ]b4_parse_param_cons[
   }
-]])[
-
+]],[[
   /**
    * Instantiates the Bison-generated parser.
    * @@param $yylexer The scanner that will supply tokens to the parser.
    */
-  ]b4_lexer_if([[protected]], [[public]]) b4_parser_class_name[ (]b4_parse_param_decl([[Lexer $yylexer]])[)
+  ]b4_lexer_if([[protected]], [[public]])[ function __construct (]b4_parse_param_decl([[Lexer $yylexer]])[)
   {
     ]b4_percent_code_get([[init]])[
     $this->yylexer = $yylexer;
     ]b4_parse_param_cons[
   }
+]])[
 
   private $yyDebugStream = STDERR;
 
