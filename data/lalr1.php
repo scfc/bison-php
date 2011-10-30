@@ -86,10 +86,10 @@ b4_percent_code_get([[imports]])
      * ]b4_locations_if([[@@param $loc The location of the element to which the
      *                error message is related]])[
      * @@param $msg The string for the error message.  */
-     function yyerror (]b4_locations_if([b4_location_type[ $loc, ]])[$msg);]
+     function yyerror (]b4_locations_if([b4_location_type[ $loc, ]])[$msg);
   }
 
-b4_locations_if([[
+]b4_locations_if([[
   /**
    * A class defining a pair of positions.  Positions, defined by the
    * <code>]b4_position_type[</code> class, denote a point in the input.
@@ -123,7 +123,7 @@ b4_locations_if([[
     }
   }
 
-]])
+]])[
 
 ]b4_lexer_if([[class YYLexer implements Lexer {
 ]b4_percent_code_get([[lexer]])[
@@ -226,13 +226,13 @@ b4_lexer_if([[
     $this->yylexer = new YYLexer(]b4_lex_param_call[);
     ]b4_parse_param_cons[
   }
-]])
+]])[
 
   /**
    * Instantiates the Bison-generated parser.
    * @@param $yylexer The scanner that will supply tokens to the parser.
    */
-  b4_lexer_if([[protected]], [[public]]) b4_parser_class_name[ (]b4_parse_param_decl([[Lexer $yylexer]])[)
+  ]b4_lexer_if([[protected]], [[public]]) b4_parser_class_name[ (]b4_parse_param_decl([[Lexer $yylexer]])[)
   {
     ]b4_percent_code_get([[init]])[
     $this->yylexer = $yylexer;
@@ -452,9 +452,9 @@ b4_lexer_if([[
 
     /// ]b4_location_type[ of the lookahead.
     $yylloc = new ]b4_location_type[ (null, null);
-
+])[
     /// Semantic value of the lookahead.
-    [$yylval = null;
+    $yylval = null;
 
     self::yycdebug ("Starting parse\n");
     $this->yyerrstatus_ = 0;
