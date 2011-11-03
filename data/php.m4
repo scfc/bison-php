@@ -109,7 +109,7 @@ m4_define([b4_typed_parser_table_define],
 [m4_ifval([$4], [b4_comment([$4])
   ])dnl
 [private $yy$2_ = array(
-  ]m4_if([$1], [String], [m4_bpatsubst($3, [\$], [\\$])], [$3])[
+  ]$3[
     );
 ]])
 

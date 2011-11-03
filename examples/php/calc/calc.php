@@ -962,8 +962,8 @@ private $yycheck_ = array(
   /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
      First, the terminals, then, starting at \a yyntokens_, nonterminals.  */
   private $yytname_ = array(
-  "\$end", "error", "\$undefined", "NUM", "'-'", "'+'", "'*'", "'/'", "'^'",
-  "'\\n'", "'('", "')'", "\$accept", "input", "line", "exp", null
+  "\$end", "error", "\$undefined", "NUM", "'-'", "'+'", "'*'", "'/'",
+  "'^'", "'\\n'", "'('", "')'", "\$accept", "input", "line", "exp", null
     );
 
 
