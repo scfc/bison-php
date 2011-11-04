@@ -262,7 +262,9 @@ m4_define([b4_lex_param_call],
                     [$1])])
 m4_define([b4_param_calls],
           [m4_map([b4_param_call], [$@])])
-m4_define([b4_param_call], [, $2])
+# FIXME: This should probably better be dealt with in parse-gram.y's
+#        add_param ().
+m4_define([b4_param_call], [, m4_bpatsubst($1, [^.* ], [])])
 
 
 

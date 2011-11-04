@@ -3,7 +3,7 @@
 %name-prefix "Calc"
 %define parser_class_name "Calc"
 
-%error-verbose %locations %lex-param { $is }
+%error-verbose %locations %lex-param { $is } %lex-param { Exception $dummy }
 
 /* Grammar follows */
 %token NUM
@@ -123,5 +123,5 @@ class Position {
   }
 }
 
-$p = new Calc (STDIN);
+$p = new Calc (STDIN, new Exception ());
 $p->parse ();

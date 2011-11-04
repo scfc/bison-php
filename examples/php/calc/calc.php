@@ -290,10 +290,10 @@ class Calc
   /**
    * Instantiates the Bison-generated parser.
    */
-  public function __construct ($is)
+  public function __construct ($is,Exception $dummy)
   {
     
-    $this->yylexer = new YYLexer(is);
+    $this->yylexer = new YYLexer($is,$dummy);
     
   }
 
@@ -1082,5 +1082,5 @@ class Position {
   }
 }
 
-$p = new Calc (STDIN);
+$p = new Calc (STDIN, new Exception ());
 $p->parse ();
