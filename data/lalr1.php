@@ -36,8 +36,7 @@ m4_divert_push(0)dnl
 b4_copyright([Skeleton implementation for Bison LALR(1) parsers in PHP],
              [2007-2011])
 
-b4_percent_define_ifdef([package], [package b4_percent_define_get([package]);
-])[/* First part of user declarations.  */
+[/* First part of user declarations.  */
 ]b4_user_pre_prologue
 b4_user_post_prologue
 b4_percent_code_get([[imports]])
