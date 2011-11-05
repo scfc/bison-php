@@ -196,7 +196,7 @@ m4_define([b4_lhs_value], [$yyval])
 # In this simple implementation, %token and %type have class names
 # between the angle brackets.
 m4_define([b4_rhs_value],
-[(m4_ifval($3, [($3)])[]($yystack->valueAt ($1-($2))))])
+[($yystack->valueAt ($1-($2)))])
 
 # b4_lhs_location()
 # -----------------
