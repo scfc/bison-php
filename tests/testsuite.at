@@ -66,6 +66,9 @@ m4_include([c++.at])
 # And some Java specific tests.
 m4_include([java.at])
 
+# And some PHP specific tests.
+m4_include([php.at])
+
 # GLR tests:
 # C++ types, simplified
 m4_include([cxx-type.at])

@@ -58,6 +58,7 @@ TESTSUITE_AT =                                  \
   tests/named-refs.at                           \
   tests/output.at                               \
   tests/package.m4                              \
+  tests/php.at                                  \
   tests/push.at                                 \
   tests/reduce.at                               \
   tests/regression.at                           \
