@@ -224,6 +224,7 @@ b4_lexer_if([[
     ]b4_percent_code_get([[init]])[
     $this->yylexer = new YYLexer(]b4_lex_param_call[);
     ]b4_parse_param_cons[
+    $this->setDebugStream (defined ('STDERR') ? STDERR : fopen ('php://output', 'w'));
   }
 ]],[[
   /**
@@ -238,7 +239,7 @@ b4_lexer_if([[
   }
 ]])[
 
-  private $yyDebugStream = STDERR;
+  private $yyDebugStream;
 
   /**
    * Return the <tt>PrintStream</tt> on which the debugging output is
