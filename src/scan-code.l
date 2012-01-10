@@ -510,7 +510,7 @@ show_sub_messages (const char* cp, bool explicit_bracketing,
 static long int
 parse_ref (char *cp, symbol_list *rule, int rule_length,
            int midrule_rhs_index, char *text, location text_loc,
-           char dollar_or_at)
+           char dollar_or_at, bool type_name_given)
 {
   symbol_list *l;
   char *cp_end;
@@ -617,6 +617,13 @@ parse_ref (char *cp, symbol_list *rule, int rule_length,
         unsigned len = (explicit_bracketing || !ref_tail_fields) ?
           cp_end - cp : ref_tail_fields - cp;
         unsigned indent = 0;
+
+        if (!strcmp (language->language, "php") && !explicit_bracketing && !type_name_given && dollar_or_at == '$')
+          {
+            ref_tail_fields = NULL;
+            obstack_sgrow (&obstack_for_string, cp - 1);
+            return INVALID_REF;
+          }
 
         complain_at_indent (text_loc, &indent, _("invalid reference: %s"),
                             quote (text));
@@ -735,7 +742,7 @@ handle_action_dollar (symbol_list *rule, char *text, location dollar_loc)
     }
 
   n = parse_ref (cp, effective_rule, effective_rule_length,
-                 rule->midrule_parent_rhs_index, text, dollar_loc, '$');
+                 rule->midrule_parent_rhs_index, text, dollar_loc, '$', type_name != NULL);
 
   if (gt_ptr)
     *gt_ptr = '\0';
@@ -827,7 +834,7 @@ handle_action_at (symbol_list *rule, char *text, location at_loc)
   muscle_percent_define_ensure("locations", at_loc, true);
 
   n = parse_ref (cp, effective_rule, effective_rule_length,
-                       rule->midrule_parent_rhs_index, text, at_loc, '@');
+                       rule->midrule_parent_rhs_index, text, at_loc, '@', false);
   switch (n)
     {
     case INVALID_REF:
