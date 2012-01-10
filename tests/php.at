@@ -440,7 +440,7 @@ m4_define([AT_CHECK_PHP_GREP],
 # PHP parser class names.  #
 # ------------------------ #
 
-AT_SETUP([PHP parser class and package names])
+AT_SETUP([PHP parser class names])
 
 AT_CHECK_PHP_MINIMAL([])
 AT_CHECK_PHP_GREP([[class YYParser]])
