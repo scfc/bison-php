@@ -469,10 +469,6 @@ AT_CHECK_PHP_GREP([[abstract class YYParser]])
 AT_CHECK_PHP_MINIMAL([[%define final]])
 AT_CHECK_PHP_GREP([[final class YYParser]])
 
-AT_CHECK_PHP_MINIMAL([[
-%define annotations "/*@Deprecated @SupressWarnings(\"unchecked\") @SupressWarnings({\"unchecked\", \"deprecation\"}) @SupressWarnings(value={\"unchecked\", \"deprecation\"})*/"]])
-AT_CHECK_PHP_GREP([[/\*@Deprecated @SupressWarnings("unchecked") @SupressWarnings({"unchecked", "deprecation"}) @SupressWarnings(value={"unchecked", "deprecation"})\*/ class YYParser]])
-
 AT_CLEANUP
 
 

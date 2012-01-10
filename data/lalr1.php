@@ -177,8 +177,7 @@ class YYStack {
     }
   }
 
-]b4_percent_define_get3([annotations], [], [ ])dnl
-b4_abstract_if([abstract ])dnl
+]b4_abstract_if([abstract ])dnl
 b4_final_if([final ])dnl
 [class ]b4_parser_class_name[]dnl
 b4_percent_define_get3([extends], [ extends ])dnl
