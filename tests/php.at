@@ -623,3 +623,17 @@ AT_CHECK([[$EGREP -v ' */?\*' YYParser.php | grep 'Position']], [1], [ignore])
 AT_CHECK([[$EGREP -v ' */?\*' YYParser.php | grep 'Location']], [1], [ignore])
 
 AT_CLEANUP
+
+
+# --------------------------------------
+# PHP token names containing C trigraphs
+# --------------------------------------
+
+AT_SETUP([PHP token names containing C trigraphs])
+
+AT_CHECK_PHP_MINIMAL([%token TRIGRAPHS "??=??/??'??(??)??!??<??>??-"], [], [])
+# Ensure that the compilation just didn't succeed because the token
+# wasn't output at all.
+AT_CHECK([[grep '"\\"??=??/??'\''??(??)??!??<??>??-\\""' YYParser.php]], [0], [ignore])
+
+AT_CLEANUP
