@@ -18,6 +18,9 @@ Currently, the supported skeletons are:
 - lalr1.java
   Produces a Java parser class.
 
+- lalr1.php
+  Produces a PHP parser class.
+
 - glr.c
   A Generalized LR C parser based on Bison's LALR(1) tables.
 
