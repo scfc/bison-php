@@ -155,6 +155,8 @@ class YYStack {
     }
 
     public function stateAt ($i) {
+      if (!array_key_exists ($this->height - $i, $this->stateStack))
+        throw (new OutOfBoundsException ('YYStack::stateAt(' . $i . ') failed, $this->height = ' . $this->height));
       return $this->stateStack[$this->height - $i];
     }
 
