@@ -284,12 +284,11 @@ b4_lexer_if([[
   }]],[[
   /**
    * Print an error message via the lexer.
-   *]b4_locations_if([[ Use a <code>null</code> location.]])[
    * @@param $msg The error message.
    */
   public function yyerror ($msg)
   {
-    $this->yylexer->yyerror (]b4_locations_if([[()null, ]])[$msg);
+    $this->yylexer->yyerror ($msg);
   }
 ]])
 
