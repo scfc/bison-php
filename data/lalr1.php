@@ -1,6 +1,6 @@
 # PHP skeleton for Bison -*- autoconf -*-
 
-# Copyright (C) 2007-2011 Free Software Foundation, Inc.
+# Copyright (C) 2007-2012 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -497,7 +497,9 @@ m4_popdef([b4_at_dollar])])dnl
         if ($yychar == self::yyempty_)
           {
             self::yycdebug ("Reading a token: ");
-            $yychar = $this->yylexer->yylex ();]
+            $yychar = $this->yylexer->yylex ();
+            if (is_string ($yychar))
+              $yychar = ord ($yychar);]
             b4_locations_if([[
             $yylloc = new ]b4_location_type[($this->yylexer->getStartPos (),
                             $this->yylexer->getEndPos ());]])
