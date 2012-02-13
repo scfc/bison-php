@@ -557,6 +557,13 @@ AT_CHECK_PHP_MINIMAL_W_LEXER([[
 AT_CHECK_PHP_GREP([[ *public function __construct (\$lex_param1, *\$lex_param2, *Exception \$lex_param3) *]])
 AT_CHECK_PHP_GREP([[.* = new YYLexer *(\$lex_param1, *\$lex_param2, *\$lex_param3);]])
 
+AT_CHECK_PHP_MINIMAL_W_LEXER([[
+%lex-param {&$lex_param1}
+%lex-param {Exception &$lex_param2}]],
+    [], [[return EOF;]], [[function __construct (&$lex_param1, Exception &$lex_param2) {}]])
+AT_CHECK_PHP_GREP([[ *public function __construct (&\$lex_param1, *Exception &\$lex_param2) *]])
+AT_CHECK_PHP_GREP([[.* = new YYLexer *(\$lex_param1, *\$lex_param2);]])
+
 # FIXME: AT_CHECK_PHP_MINIMAL_W_LEXER([[
 # FIXME: %parse-param {int parse_param1}
 # FIXME: %parse-param {long parse_param2}

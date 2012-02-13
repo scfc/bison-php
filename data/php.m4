@@ -2,7 +2,7 @@
 
 # PHP language support for Bison
 
-# Copyright (C) 2007-2011 Free Software Foundation, Inc.
+# Copyright (C) 2007-2012 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -264,7 +264,7 @@ m4_define([b4_param_calls],
           [m4_map([b4_param_call], [$@])])
 # FIXME: This should probably better be dealt with in parse-gram.y's
 #        add_param ().
-m4_define([b4_param_call], [, m4_bpatsubst($1, [^.* ], [])])
+m4_define([b4_param_call], [, m4_bpatsubst($1, [^\(.* \)?&?], [])])
 
 
 
