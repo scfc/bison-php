@@ -337,7 +337,7 @@ b4_lexer_if([[
     ]b4_locations_if([[$yyloc = self::yylloc ($yystack, $yylen);]])[
 
     /* If YYLEN is nonzero, implement the default value of the action:
-       `$$ = $1'.  Otherwise, use the top of the stack.
+       "$$ = $1".  Otherwise, use the top of the stack.
 
        Otherwise, the following line sets YYVAL to garbage.
        This behavior is undocumented and Bison
