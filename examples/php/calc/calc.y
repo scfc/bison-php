@@ -3,7 +3,7 @@
 %name-prefix "Calc"
 %define parser_class_name "Calc"
 
-%error-verbose %locations %lex-param { $is } %lex-param { Exception $dummy }
+%error-verbose %locations %lex-param { $is }
 
 /* Grammar follows */
 %token NUM

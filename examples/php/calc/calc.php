@@ -1,5 +1,5 @@
 <?php
-/* A Bison parser, made by GNU Bison 2.4.637-d495.  */
+/* A Bison parser, made by GNU Bison 2.4.706-fa0fb.  */
 
 /* Skeleton implementation for Bison LALR(1) parsers in PHP
    
@@ -33,10 +33,10 @@
 
 /* First part of user declarations.  */
 
-/* Line 41 of lalr1.php  */
+/* Line 40 of lalr1.php  */
 /* Line 38 of "calc.php"  */
 
-/* Line 42 of lalr1.php  */
+/* Line 41 of lalr1.php  */
 /* Line 41 of "calc.php"  */
 
 /**
@@ -129,7 +129,7 @@
 
 class YYLexer implements Lexer {
 /* "%code lexer" blocks.  */
-/* Line 128 of lalr1.php  */
+/* Line 127 of lalr1.php  */
 /* Line 31 of "calc.y"  */
 
 
@@ -195,7 +195,7 @@ class YYLexer implements Lexer {
     }
 
 
-/* Line 128 of lalr1.php  */
+/* Line 127 of lalr1.php  */
 /* Line 200 of "calc.php"  */
 
   }
@@ -226,6 +226,8 @@ class YYStack {
     }
 
     public function stateAt ($i) {
+      if (!array_key_exists ($this->height - $i, $this->stateStack))
+        throw (new OutOfBoundsException ('YYStack::stateAt(' . $i . ') failed, $this->height = ' . $this->height));
       return $this->stateStack[$this->height - $i];
     }
 
@@ -251,7 +253,7 @@ class YYStack {
 class Calc
 {
     /** Version number for the Bison executable that generated this parser.  */
-  const bisonVersion = "2.4.637-d495";
+  const bisonVersion = "2.4.706-fa0fb";
 
   /** Name of the skeleton that generated this parser.  */
   const bisonSkeleton = "lalr1.php";
@@ -290,15 +292,16 @@ class Calc
   /**
    * Instantiates the Bison-generated parser.
    */
-  public function __construct ($is,Exception $dummy)
+  public function __construct ($is)
   {
     
-    $this->yylexer = new YYLexer($is,$dummy);
+    $this->yylexer = new YYLexer($is);
     
+    $this->setDebugStream (defined ('STDERR') ? STDERR : fopen ('php://output', 'w'));
   }
 
 
-  private $yyDebugStream = STDERR;
+  private $yyDebugStream;
 
   /**
    * Return the <tt>PrintStream</tt> on which the debugging output is
@@ -403,62 +406,62 @@ class Calc
           case 5:
   /* Line 354 of lalr1.php  */
 /* Line 20 of "calc.y"  */
-    { printf ("\t%.10g\n", (($yystack->valueAt (2-(1))))); };
+    { printf ("\t%.10g\n", ($yystack->valueAt (2-(1)))); };
   break;
     
 
   case 6:
   /* Line 354 of lalr1.php  */
 /* Line 23 of "calc.y"  */
-    { $yyval = (($yystack->valueAt (1-(1))));           };
+    { $yyval = ($yystack->valueAt (1-(1)));           };
   break;
     
 
   case 7:
   /* Line 354 of lalr1.php  */
 /* Line 24 of "calc.y"  */
-    { $yyval = (($yystack->valueAt (3-(1)))) + (($yystack->valueAt (3-(3))));      };
+    { $yyval = ($yystack->valueAt (3-(1))) + ($yystack->valueAt (3-(3)));      };
   break;
     
 
   case 8:
   /* Line 354 of lalr1.php  */
 /* Line 25 of "calc.y"  */
-    { $yyval = (($yystack->valueAt (3-(1)))) - (($yystack->valueAt (3-(3))));      };
+    { $yyval = ($yystack->valueAt (3-(1))) - ($yystack->valueAt (3-(3)));      };
   break;
     
 
   case 9:
   /* Line 354 of lalr1.php  */
 /* Line 26 of "calc.y"  */
-    { $yyval = (($yystack->valueAt (3-(1)))) * (($yystack->valueAt (3-(3))));      };
+    { $yyval = ($yystack->valueAt (3-(1))) * ($yystack->valueAt (3-(3)));      };
   break;
     
 
   case 10:
   /* Line 354 of lalr1.php  */
 /* Line 27 of "calc.y"  */
-    { $yyval = (($yystack->valueAt (3-(1)))) / (($yystack->valueAt (3-(3))));      };
+    { $yyval = ($yystack->valueAt (3-(1))) / ($yystack->valueAt (3-(3)));      };
   break;
     
 
   case 11:
   /* Line 354 of lalr1.php  */
 /* Line 28 of "calc.y"  */
-    { $yyval = pow ((($yystack->valueAt (3-(1)))), (($yystack->valueAt (3-(3))))); };
+    { $yyval = pow (($yystack->valueAt (3-(1))), ($yystack->valueAt (3-(3)))); };
   break;
     
 
   case 12:
   /* Line 354 of lalr1.php  */
 /* Line 29 of "calc.y"  */
-    { $yyval = (($yystack->valueAt (3-(2))));           };
+    { $yyval = ($yystack->valueAt (3-(2)));           };
   break;
     
 
 
 /* Line 354 of lalr1.php  */
-/* Line 462 of "calc.php"  */
+/* Line 465 of "calc.php"  */
         default: break;
       }
 
@@ -597,6 +600,8 @@ class Calc
           {
             self::yycdebug ("Reading a token: ");
             $yychar = $this->yylexer->yylex ();
+            if (is_string ($yychar))
+              $yychar = ord ($yychar);
             
             $yylloc = new Location($this->yylexer->getStartPos (),
                             $this->yylexer->getEndPos ());
@@ -743,7 +748,7 @@ class Calc
               }
 
             /* Pop the current state because it cannot handle the error token.  */
-            if ($yystack->height == 1)
+            if ($yystack->height == 0)
               return false;
 
             $yyerrloc = $yystack->locationAt (0);
@@ -989,8 +994,8 @@ private $yycheck_ = array(
     /* The symbols being reduced.  */
     for ($yyi = 0; $yyi < $yynrhs; $yyi++)
       self::yy_symbol_print ("   \$" . ($yyi + 1) . " =",
-                       $this->yystos_[$yystack->stateAt($yyi + 1 - $yynrhs)],
-                       (($yystack->valueAt ($yynrhs-($yyi + 1)))),
+                       $this->yystos_[$yystack->stateAt($yynrhs - ($yyi + 1))],
+                       ($yystack->valueAt ($yynrhs-($yyi + 1))),
                        $yystack->locationAt ($yynrhs-($yyi + 1)));
   }
 
@@ -1048,7 +1053,7 @@ private $yycheck_ = array(
 
 }
 
-/* Line 841 of lalr1.php  */
+/* Line 843 of lalr1.php  */
 /* Line 94 of "calc.y"  */
 
 class Position {
