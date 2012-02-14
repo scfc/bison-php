@@ -786,9 +786,9 @@ m4_popdef([b4_at_dollar])])dnl
      [TOKEN_NUMBER_[YYLEX-NUM] -- Internal symbol number corresponding
      to YYLEX-NUM.])[
 
-  /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
-     First, the terminals, then, starting at \a yyntokens_, nonterminals.  */
-  ]b4_typed_parser_table_define([String], [tname], [b4_tname])[
+  ]b4_integral_parser_table_define([tname], [b4_tname],
+     [YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
+     First, the terminals, then, starting at \a yyntokens_, nonterminals.])[
 
   ]b4_integral_parser_table_define([rline], [b4_rline],
   [YYRLINE[YYN] -- Source line where rule number YYN was defined.])[

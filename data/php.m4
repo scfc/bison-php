@@ -82,42 +82,20 @@ m4_define([b4_identification],
 ## Data types.  ##
 ## ------------ ##
 
-# b4_int_type(MIN, MAX)
-# ---------------------
-# Return the smallest int type able to handle numbers ranging from
-# MIN to MAX (included).
-m4_define([b4_int_type],
-[m4_if(b4_ints_in($@,   [-128],   [127]), [1], [byte],
-       b4_ints_in($@, [-32768], [32767]), [1], [short],
-                                               [int])])
-
-# b4_int_type_for(NAME)
-# ---------------------
-# Return the smallest int type able to handle numbers ranging from
-# "NAME_min" to "NAME_max" (included).
-m4_define([b4_int_type_for],
-[b4_int_type($1_min, $1_max)])
-
 # b4_null
 # -------
 m4_define([b4_null], [null])
 
 
-# b4_typed_parser_table_define(TYPE, NAME, DATA, COMMENT)
-# -------------------------------------------------------
-m4_define([b4_typed_parser_table_define],
-[m4_ifval([$4], [b4_comment([$4])
-  ])dnl
-[private $yy$2_ = array(
-  ]$3[
-    );
-]])
-
-
 # b4_integral_parser_table_define(NAME, DATA, COMMENT)
 #-----------------------------------------------------
 m4_define([b4_integral_parser_table_define],
-[b4_typed_parser_table_define([b4_int_type_for([$2])], [$1], [$2], [$3])])
+[m4_ifval([$3], [b4_comment([$3])
+  ])dnl
+[private $yy$1_ = array(
+  ]$2[
+    );
+]])
 
 
 ## ------------------------- ##
