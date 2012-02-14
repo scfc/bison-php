@@ -277,8 +277,10 @@ m4_define([b4_parse_param_cons],
 
 m4_define([b4_constructor_calls],
           [m4_map([b4_constructor_call], [$@])])
+# FIXME: This should probably better be dealt with in parse-gram.y's
+#        add_param ().
 m4_define([b4_constructor_call],
-          [this.$2 = $2;
+          [m4_bpatsubst($1, [^\(.* \)?\(&?\)\$\(.*\)$], [$this->\3 =\2 $\3;])
           ])
 
 
@@ -295,5 +297,7 @@ b4_var_decls(b4_parse_param)])])
 m4_define([b4_var_decls],
           [m4_map_sep([b4_var_decl], [
 ], [$@])])
+# FIXME: This should probably better be dealt with in parse-gram.y's
+#        add_param ().
 m4_define([b4_var_decl],
-          [    protected final $1;])
+          [    protected m4_bpatsubst($1, [^\(.* \)?&?], []);])

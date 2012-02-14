@@ -501,41 +501,51 @@ AT_SETUP([PHP %parse-param and %lex-param])
 AT_CHECK_PHP_MINIMAL([])
 AT_CHECK_PHP_GREP([[ *public function __construct (Lexer \$yylexer) *]])
 
-# FIXME: AT_CHECK_PHP_MINIMAL([[%parse-param {int parse_param1}]])
-# FIXME: AT_CHECK_PHP_GREP([[ *protected final int parse_param1;]])
-# FIXME: AT_CHECK_PHP_GREP([[ *public YYParser (Lexer yylexer, *int parse_param1) *]])
-# FIXME: AT_CHECK_PHP_GREP([[ *this.parse_param1 = parse_param1;]])
+AT_CHECK_PHP_MINIMAL([[%parse-param {$parse_param1}]])
+AT_CHECK_PHP_GREP([[ *protected \$parse_param1;]])
+AT_CHECK_PHP_GREP([[ *public function __construct (Lexer \$yylexer, *\$parse_param1) *]])
+AT_CHECK_PHP_GREP([[ *\$this->parse_param1 = \$parse_param1;]])
 
-# FIXME: AT_CHECK_PHP_MINIMAL([[
-# FIXME: %parse-param {int parse_param1}
-# FIXME: %parse-param {long parse_param2}]])
-# FIXME: AT_CHECK_PHP_GREP([[ *protected final int parse_param1;]])
-# FIXME: AT_CHECK_PHP_GREP([[ *protected final long parse_param2;]])
-# FIXME: AT_CHECK_PHP_GREP([[ *public YYParser (Lexer yylexer, *int parse_param1, *long parse_param2) *]])
-# FIXME: AT_CHECK_PHP_GREP([[ *this.parse_param1 = parse_param1;]])
-# FIXME: AT_CHECK_PHP_GREP([[ *this.parse_param2 = parse_param2;]])
+AT_CHECK_PHP_MINIMAL([[
+%parse-param {$parse_param1}
+%parse-param {Exception $parse_param2}
+%parse-param {&$parse_param3}
+%parse-param {Exception &$parse_param4}]])
+AT_CHECK_PHP_GREP([[ *protected \$parse_param1;]])
+AT_CHECK_PHP_GREP([[ *protected \$parse_param2;]])
+AT_CHECK_PHP_GREP([[ *protected \$parse_param3;]])
+AT_CHECK_PHP_GREP([[ *protected \$parse_param4;]])
+AT_CHECK_PHP_GREP([[ *public function __construct (Lexer \$yylexer, *\$parse_param1, *Exception \$parse_param2, *&\$parse_param3, *Exception &\$parse_param4) *]])
+AT_CHECK_PHP_GREP([[ *\$this->parse_param1 = $parse_param1;]])
+AT_CHECK_PHP_GREP([[ *\$this->parse_param2 = $parse_param2;]])
+AT_CHECK_PHP_GREP([[ *\$this->parse_param3 =& $parse_param3;]])
+AT_CHECK_PHP_GREP([[ *\$this->parse_param4 =& $parse_param4;]])
 
 AT_CHECK_PHP_MINIMAL_W_LEXER([], [], [[return EOF;]])
 AT_CHECK_PHP_GREP([[ *public function __construct () *]])
 AT_CHECK_PHP_GREP([[.* = new YYLexer *();]])
 
-# FIXME: AT_CHECK_PHP_MINIMAL_W_LEXER([[%parse-param {int parse_param1}]],
-# FIXME:     [], [[return EOF;]])
-# FIXME: AT_CHECK_PHP_GREP([[ *protected final int parse_param1;]])
-# FIXME: AT_CHECK_PHP_GREP([[ *public YYParser (int parse_param1) *]])
-# FIXME: AT_CHECK_PHP_GREP([[ *protected YYParser (Lexer yylexer, *int parse_param1) *]])
-# FIXME: AT_CHECK_PHP_GREP([[ *this.parse_param1 = parse_param1;]], [2])
+AT_CHECK_PHP_MINIMAL_W_LEXER([[%parse-param {$parse_param1}]],
+    [], [[return EOF;]])
+AT_CHECK_PHP_GREP([[ *protected \$parse_param1;]])
+AT_CHECK_PHP_GREP([[ *public function __construct (\$parse_param1) *]])
+AT_CHECK_PHP_GREP([[ *\$this->parse_param1 = \$parse_param1;]])
 
-# FIXME: AT_CHECK_PHP_MINIMAL_W_LEXER([[
-# FIXME: %parse-param {int parse_param1}
-# FIXME: %parse-param {long parse_param2}]],
-# FIXME:     [], [[return EOF;]])
-# FIXME: AT_CHECK_PHP_GREP([[ *protected final int parse_param1;]])
-# FIXME: AT_CHECK_PHP_GREP([[ *protected final long parse_param2;]])
-# FIXME: AT_CHECK_PHP_GREP([[ *public YYParser (int parse_param1, *long parse_param2) *]])
-# FIXME: AT_CHECK_PHP_GREP([[ *protected YYParser (Lexer yylexer, *int parse_param1, *long parse_param2) *]])
-# FIXME: AT_CHECK_PHP_GREP([[ *this.parse_param1 = parse_param1;]], [2])
-# FIXME: AT_CHECK_PHP_GREP([[ *this.parse_param2 = parse_param2;]], [2])
+AT_CHECK_PHP_MINIMAL_W_LEXER([[
+%parse-param {$parse_param1}
+%parse-param {Exception $parse_param2}
+%parse-param {&$parse_param3}
+%parse-param {Exception &$parse_param4}]],
+    [], [[return EOF;]])
+AT_CHECK_PHP_GREP([[ *protected \$parse_param1;]])
+AT_CHECK_PHP_GREP([[ *protected \$parse_param2;]])
+AT_CHECK_PHP_GREP([[ *protected \$parse_param3;]])
+AT_CHECK_PHP_GREP([[ *protected \$parse_param4;]])
+AT_CHECK_PHP_GREP([[ *public function __construct (\$parse_param1, *Exception \$parse_param2, *&\$parse_param3, *Exception &\$parse_param4) *]])
+AT_CHECK_PHP_GREP([[ *\$this->parse_param1 = $parse_param1;]])
+AT_CHECK_PHP_GREP([[ *\$this->parse_param2 = $parse_param2;]])
+AT_CHECK_PHP_GREP([[ *\$this->parse_param3 =& $parse_param3;]])
+AT_CHECK_PHP_GREP([[ *\$this->parse_param4 =& $parse_param4;]])
 
 AT_CHECK_PHP_MINIMAL_W_LEXER([[%lex-param {$lex_param1}]],
     [], [[return EOF;]], [[function __construct ($lex_param1) {}]])
@@ -564,19 +574,18 @@ AT_CHECK_PHP_MINIMAL_W_LEXER([[
 AT_CHECK_PHP_GREP([[ *public function __construct (&\$lex_param1, *Exception &\$lex_param2) *]])
 AT_CHECK_PHP_GREP([[.* = new YYLexer *(\$lex_param1, *\$lex_param2);]])
 
-# FIXME: AT_CHECK_PHP_MINIMAL_W_LEXER([[
-# FIXME: %parse-param {int parse_param1}
-# FIXME: %parse-param {long parse_param2}
-# FIXME: %lex-param {char lex_param1}
-# FIXME: %lex-param {short lex_param2}]],
-# FIXME:     [], [[return EOF;]], [[YYLexer (char lex_param1, short lex_param2) {}]])
-# FIXME: AT_CHECK_PHP_GREP([[ *protected final int parse_param1;]])
-# FIXME: AT_CHECK_PHP_GREP([[ *protected final long parse_param2;]])
-# FIXME: AT_CHECK_PHP_GREP([[ *public YYParser (char lex_param1, *short lex_param2, *int parse_param1, *long parse_param2) *]])
-# FIXME: AT_CHECK_PHP_GREP([[.* = new YYLexer *(lex_param1, *lex_param2);]])
-# FIXME: AT_CHECK_PHP_GREP([[ *protected YYParser (Lexer yylexer, *int parse_param1, *long parse_param2) *]])
-# FIXME: AT_CHECK_PHP_GREP([[ *this.parse_param1 = parse_param1;]], [2])
-# FIXME: AT_CHECK_PHP_GREP([[ *this.parse_param2 = parse_param2;]], [2])
+AT_CHECK_PHP_MINIMAL_W_LEXER([[
+%parse-param {$parse_param1}
+%parse-param {Exception $parse_param2}
+%lex-param {$lex_param1}
+%lex-param {Exception $lex_param2}]],
+    [], [[return EOF;]], [[public function __construct ($lex_param1, Exception $lex_param2) {}]])
+AT_CHECK_PHP_GREP([[ *protected $parse_param1;]])
+AT_CHECK_PHP_GREP([[ *protected $parse_param2;]])
+AT_CHECK_PHP_GREP([[ *public function __construct (\$lex_param1, *Exception \$lex_param2, *\$parse_param1, *Exception \$parse_param2) *]])
+AT_CHECK_PHP_GREP([[.* = new YYLexer *(\$lex_param1, *\$lex_param2);]])
+AT_CHECK_PHP_GREP([[ *\$this->parse_param1 = $parse_param1;]])
+AT_CHECK_PHP_GREP([[ *\$this->parse_param2 = $parse_param2;]])
 
 AT_CLEANUP
 
