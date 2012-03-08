@@ -618,7 +618,7 @@ parse_ref (char *cp, symbol_list *rule, int rule_length,
           cp_end - cp : ref_tail_fields - cp;
         unsigned indent = 0;
 
-        if (!strcmp (language->language, "php") && !explicit_bracketing && !type_name_given && dollar_or_at == '$')
+        if (STREQ (language->language, "php") && !explicit_bracketing && !type_name_given && dollar_or_at == '$')
           {
             ref_tail_fields = NULL;
             obstack_sgrow (&obstack_for_string, cp - 1);

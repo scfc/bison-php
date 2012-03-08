@@ -160,9 +160,9 @@ prepare_symbols (void)
     int j = 2;
     struct quoting_options *qo = clone_quoting_options (0);
     set_quoting_style (qo, c_quoting_style);
-    if (strcmp (language->language, "java") && strcmp (language->language, "php"))
+    if (STRNEQ (language->language, "java") && STRNEQ (language->language, "php"))
       set_quoting_flags (qo, QA_SPLIT_TRIGRAPHS);
-    if (!strcmp (language->language, "php"))
+    if (STREQ (language->language, "php"))
       set_char_quoting (qo, '$', 1);
     for (i = 0; i < nsyms; i++)
       {
