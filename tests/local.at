@@ -470,8 +470,8 @@ m4_define([AT_FULL_COMPILE], [
 
 m4_define([AT_PHP_LINT],
 [AT_KEYWORDS(php)
-AT_CHECK([[php -l ]$1],
-         [[0]], [No syntax errors detected in $1
+AT_CHECK([php -l $1 < /dev/null],
+         [0], [No syntax errors detected in $1
 ], [])])
 
 
