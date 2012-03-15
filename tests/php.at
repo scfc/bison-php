@@ -25,8 +25,8 @@ AT_BANNER([[PHP Calculator.]])
 
 # _AT_DATA_PHP_CALC_Y($1, $2, $3, [BISON-DIRECTIVES], [BISON-EPILOGUE])
 # ---------------------------------------------------------------------
-# Produce `calc.y'.  Don't call this macro directly, because it contains
-# some occurrences of `$1' etc. which will be interpreted by m4.  So
+# Produce "calc.y".  Don't call this macro directly, because it contains
+# some occurrences of "$1" etc. which will be interpreted by m4.  So
 # you should call it with $1, $2, and $3 as arguments, which is what
 # AT_DATA_PHP_CALC_Y does.
 m4_define([_AT_DATA_PHP_CALC_Y],
@@ -201,7 +201,7 @@ class Position {
 
 # AT_DATA_CALC_Y([BISON-OPTIONS, BISON-EPILOGUE])
 # -----------------------------------------------
-# Produce `calc.y'.
+# Produce "calc.y".
 m4_define([AT_DATA_PHP_CALC_Y],
 [_AT_DATA_PHP_CALC_Y($[1], $[2], $[3], [$1], [$2])
 ])
@@ -210,7 +210,7 @@ m4_define([AT_DATA_PHP_CALC_Y],
 # _AT_CHECK_PHP_CALC_ERROR(BISON-OPTIONS, INPUT,
 #                          [VERBOSE-AND-LOCATED-ERROR-MESSAGE])
 # -------------------------------------------------------------
-# Run `calc' on INPUT, and expect a `syntax error' message.
+# Run "calc" on INPUT, and expect a "syntax error" message.
 #
 # If INPUT starts with a slash, it is used as absolute input file name,
 # otherwise as contents.
@@ -235,7 +235,7 @@ AT_DATA([[expout]],
 AT_YYERROR_SEES_LOC_IF([],
 [[sed 's/^[-0-9.]*: //' expout >at-expout
 mv at-expout expout]])
-# 3. If error-verbose is not used, strip the`, unexpected....' part.
+# 3. If error-verbose is not used, strip the ", unexpected...." part.
 m4_bmatch([$1], [%error-verbose], [],
 [[sed 's/syntax error, .*$/syntax error/' expout >at-expout
 mv at-expout expout]])
@@ -245,7 +245,7 @@ AT_CHECK([cat stderr], 0, [expout])
 
 # _AT_CHECK_PHP_CALC([BISON-DIRECTIVES], [BISON-EPILOGUE])
 # --------------------------------------------------------
-# Start a testing chunk which compiles `calc' grammar with
+# Start a testing chunk which compiles "calc" grammar with
 # BISON-DIRECTIVES, and performs several tests over the parser.
 m4_define([_AT_CHECK_PHP_CALC],
 [# We use integers to avoid dependencies upon the precision of doubles.
@@ -302,7 +302,7 @@ _AT_CHECK_PHP_CALC_ERROR([$1], [/dev/null],
 #   - (* * *): nothing to pop, a lot to discard
 #   - (1 + 2 * *): some to pop and discard
 #
-# - test the action associated to `error'
+# - test the action associated to "error"
 #
 # - check the lookahead that triggers an error is not discarded
 #   when we enter error recovery.  Below, the lookahead causing the
@@ -334,7 +334,7 @@ AT_CLEANUP
 
 # AT_CHECK_PHP_CALC([BISON-DIRECTIVES], [BISON-EPILOGUE])
 # -------------------------------------------------------
-# Start a testing chunk which compiles `calc' grammar with
+# Start a testing chunk which compiles "calc" grammar with
 # BISON-DIRECTIVES, and performs several tests over the parser.
 # Run the test with and without %error-verbose.
 m4_define([AT_CHECK_PHP_CALC],
