@@ -782,16 +782,16 @@ m4_popdef([b4_at_dollar])])dnl
   const yytable_ninf_ = ]b4_table_ninf[;
 
   ]b4_parser_tables_define[
-  ]b4_integral_parser_table_define([token_number], [b4_toknum],
-     [TOKEN_NUMBER_[YYLEX-NUM] -- Internal symbol number corresponding
-     to YYLEX-NUM.])[
+]b4_integral_parser_table_define([token_number], [b4_toknum],
+     [[TOKEN_NUMBER_[YYLEX-NUM] -- Internal symbol number corresponding
+to YYLEX-NUM.]])[
 
-  ]b4_integral_parser_table_define([tname], [b4_tname],
-     [YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
-     First, the terminals, then, starting at \a yyntokens_, nonterminals.])[
+]b4_integral_parser_table_define([tname], [b4_tname],
+     [[YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
+First, the terminals, then, starting at \a yyntokens_, nonterminals.]])[
 
-  ]b4_integral_parser_table_define([rline], [b4_rline],
-  [YYRLINE[YYN] -- Source line where rule number YYN was defined.])[
+]b4_integral_parser_table_define([rline], [b4_rline],
+  [[YYRLINE[YYN] -- Source line where rule number YYN was defined.]])[
 
   // Report on the debug stream that the rule yyrule is going to be reduced.
   private function yy_reduce_print ($yyrule, YYStack $yystack)
