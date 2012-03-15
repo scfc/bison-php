@@ -1,5 +1,5 @@
 <?php
-/* A Bison parser, made by GNU Bison 2.4.706-fa0fb.  */
+/* A Bison parser, made by GNU Bison 2.4.763-a54f72.  */
 
 /* Skeleton implementation for Bison LALR(1) parsers in PHP
    
@@ -253,7 +253,7 @@ class YYStack {
 class Calc
 {
     /** Version number for the Bison executable that generated this parser.  */
-  const bisonVersion = "2.4.706-fa0fb";
+  const bisonVersion = "2.4.763-a54f72";
 
   /** Name of the skeleton that generated this parser.  */
   const bisonSkeleton = "lalr1.php";
@@ -389,7 +389,7 @@ class Calc
     $yyloc = self::yylloc ($yystack, $yylen);
 
     /* If YYLEN is nonzero, implement the default value of the action:
-       `$$ = $1'.  Otherwise, use the top of the stack.
+       "$$ = $1".  Otherwise, use the top of the stack.
 
        Otherwise, the following line sets YYVAL to garbage.
        This behavior is undocumented and Bison
@@ -956,23 +956,23 @@ private $yycheck_ = array(
     );
 
 
-  /* TOKEN_NUMBER_YYLEX-NUM -- Internal symbol number corresponding
-        to YYLEX-NUM.  */
+/* TOKEN_NUMBER_[YYLEX-NUM] -- Internal symbol number corresponding
+   to YYLEX-NUM.  */
   private $yytoken_number_ = array(
        0,   256,   257,   258,    45,    43,    42,    47,    94,    10,
       40,    41
     );
 
 
-  /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
-     First, the terminals, then, starting at \a yyntokens_, nonterminals.  */
+/* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
+   First, the terminals, then, starting at \a yyntokens_, nonterminals.  */
   private $yytname_ = array(
   "\$end", "error", "\$undefined", "NUM", "'-'", "'+'", "'*'", "'/'",
   "'^'", "'\\n'", "'('", "')'", "\$accept", "input", "line", "exp", null
     );
 
 
-  /* YYRLINEYYN -- Source line where rule number YYN was defined.  */
+/* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
   private $yyrline_ = array(
        0,    15,    15,    16,    19,    20,    23,    24,    25,    26,
       27,    28,    29
