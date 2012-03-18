@@ -1,5 +1,5 @@
 <?php
-/* A Bison parser, made by GNU Bison 2.4.763-a54f72.  */
+/* A Bison parser, made by GNU Bison 2.4.762-5220.  */
 
 /* Skeleton implementation for Bison LALR(1) parsers in PHP
    
@@ -49,7 +49,7 @@
    * Communication interface between the scanner and the Bison-generated
    * parser <tt>Calc</tt>.
    */
-  interface Lexer {
+  interface LexerInterface {
     /** Token returned by the scanner to signal the end of its input.  */
     const EOF = 0;
 
@@ -127,7 +127,7 @@
 
 
 
-class YYLexer implements Lexer {
+class YYLexer implements LexerInterface {
 /* "%code lexer" blocks.  */
 /* Line 127 of lalr1.php  */
 /* Line 31 of "calc.y"  */
@@ -253,7 +253,7 @@ class YYStack {
 class Calc
 {
     /** Version number for the Bison executable that generated this parser.  */
-  const bisonVersion = "2.4.763-a54f72";
+  const bisonVersion = "2.4.762-5220";
 
   /** Name of the skeleton that generated this parser.  */
   const bisonSkeleton = "lalr1.php";
@@ -609,9 +609,9 @@ class Calc
           }
 
         /* Convert token to internal form.  */
-        if ($yychar <= Lexer::EOF)
+        if ($yychar <= LexerInterface::EOF)
           {
-            $yychar = $yytoken = Lexer::EOF;
+            $yychar = $yytoken = LexerInterface::EOF;
             self::yycdebug ("Now at end of input.\n");
           }
         else
@@ -698,10 +698,10 @@ class Calc
         /* If just tried and failed to reuse lookahead token after an
          error, discard it.  */
 
-        if ($yychar <= Lexer::EOF)
+        if ($yychar <= LexerInterface::EOF)
           {
           /* Return failure if at end of input.  */
-          if ($yychar == Lexer::EOF)
+          if ($yychar == LexerInterface::EOF)
             return false;
           }
         else

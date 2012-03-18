@@ -86,7 +86,7 @@ exp:
 ]],
 [[
 %%
-class CalcLexer implements Lexer {
+class CalcLexer implements LexerInterface {
 ]])[
   private $buffer;
 
@@ -133,7 +133,7 @@ class CalcLexer implements Lexer {
     $this->buffer = preg_replace ("/^[\\t ]+/", "", $this->buffer);
 
       if (strlen ($this->buffer) == 0)
-        return Lexer::EOF;
+        return LexerInterface::EOF;
       else
         if (substr ($this->buffer, 0, 1) == "\n")
           {
@@ -499,11 +499,11 @@ AT_CLEANUP
 AT_SETUP([PHP %parse-param and %lex-param])
 
 AT_CHECK_PHP_MINIMAL([])
-AT_CHECK_PHP_GREP([[ *public function __construct (Lexer \$yylexer) *]])
+AT_CHECK_PHP_GREP([[ *public function __construct (LexerInterface \$yylexer) *]])
 
 AT_CHECK_PHP_MINIMAL([[%parse-param {$parse_param1}]])
 AT_CHECK_PHP_GREP([[ *protected \$parse_param1;]])
-AT_CHECK_PHP_GREP([[ *public function __construct (Lexer \$yylexer, *\$parse_param1) *]])
+AT_CHECK_PHP_GREP([[ *public function __construct (LexerInterface \$yylexer, *\$parse_param1) *]])
 AT_CHECK_PHP_GREP([[ *\$this->parse_param1 = \$parse_param1;]])
 
 AT_CHECK_PHP_MINIMAL([[
@@ -515,7 +515,7 @@ AT_CHECK_PHP_GREP([[ *protected \$parse_param1;]])
 AT_CHECK_PHP_GREP([[ *protected \$parse_param2;]])
 AT_CHECK_PHP_GREP([[ *protected \$parse_param3;]])
 AT_CHECK_PHP_GREP([[ *protected \$parse_param4;]])
-AT_CHECK_PHP_GREP([[ *public function __construct (Lexer \$yylexer, *\$parse_param1, *Exception \$parse_param2, *&\$parse_param3, *Exception &\$parse_param4) *]])
+AT_CHECK_PHP_GREP([[ *public function __construct (LexerInterface \$yylexer, *\$parse_param1, *Exception \$parse_param2, *&\$parse_param3, *Exception &\$parse_param4) *]])
 AT_CHECK_PHP_GREP([[ *\$this->parse_param1 = $parse_param1;]])
 AT_CHECK_PHP_GREP([[ *\$this->parse_param2 = $parse_param2;]])
 AT_CHECK_PHP_GREP([[ *\$this->parse_param3 =& $parse_param3;]])

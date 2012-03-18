@@ -50,7 +50,7 @@ b4_percent_code_get([[imports]])
    * Communication interface between the scanner and the Bison-generated
    * parser <tt>]b4_parser_class_name[</tt>.
    */
-  interface Lexer {
+  interface LexerInterface {
     /** Token returned by the scanner to signal the end of its input.  */
     const EOF = 0;
 
@@ -124,7 +124,7 @@ b4_percent_code_get([[imports]])
 
 ]])[
 
-]b4_lexer_if([[class YYLexer implements Lexer {
+]b4_lexer_if([[class YYLexer implements LexerInterface {
 ]b4_percent_code_get([[lexer]])[
   }
 
@@ -232,7 +232,7 @@ b4_lexer_if([[
    * Instantiates the Bison-generated parser.
    * @@param $yylexer The scanner that will supply tokens to the parser.
    */
-  ]b4_lexer_if([[protected]], [[public]])[ function __construct (]b4_parse_param_decl([[Lexer $yylexer]])[)
+  ]b4_lexer_if([[protected]], [[public]])[ function __construct (]b4_parse_param_decl([[LexerInterface $yylexer]])[)
   {
     ]b4_percent_code_get([[init]])[
     $this->yylexer = $yylexer;
@@ -507,9 +507,9 @@ m4_popdef([b4_at_dollar])])dnl
           }
 
         /* Convert token to internal form.  */
-        if ($yychar <= Lexer::EOF)
+        if ($yychar <= LexerInterface::EOF)
           {
-            $yychar = $yytoken = Lexer::EOF;
+            $yychar = $yytoken = LexerInterface::EOF;
             self::yycdebug ("Now at end of input.\n");
           }
         else
@@ -596,10 +596,10 @@ m4_popdef([b4_at_dollar])])dnl
         /* If just tried and failed to reuse lookahead token after an
          error, discard it.  */
 
-        if ($yychar <= Lexer::EOF)
+        if ($yychar <= LexerInterface::EOF)
           {
           /* Return failure if at end of input.  */
-          if ($yychar == Lexer::EOF)
+          if ($yychar == LexerInterface::EOF)
             return false;
           }
         else
