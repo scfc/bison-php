@@ -114,11 +114,8 @@ b4_percent_code_get([[imports]])
      * Print a representation of the location.  For this to be correct,
      * <code>]b4_position_type[</code> should override the <code>equals</code>
      * method.  */
-    public function toString () {
-      if ($this->begin->equals ($this->end))
-        return $this->begin->toString ();
-      else
-        return $this->begin->toString () . "-" . $this->end->toString ();
+    public function __toString () {
+      return $this->begin . ($this->begin->equals ($this->end) ? "" : "-" . $this->end);
     }
   }
 
@@ -421,7 +418,7 @@ b4_lexer_if([[
     if ($this->yydebug > 0)
     self::yycdebug ($s . ($yytype < self::yyntokens_ ? " token " : " nterm ")
               . $this->yytname_[$yytype] . " ("]b4_locations_if([
-              . $yylocationp->toString () . ": "])[
+              . $yylocationp . ": "])[
               . ($yyvaluep == null ? "(null)" : $yyvaluep) . ")");
   }
 

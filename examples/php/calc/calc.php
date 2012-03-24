@@ -1,5 +1,5 @@
 <?php
-/* A Bison parser, made by GNU Bison 2.4.762-5220.  */
+/* A Bison parser, made by GNU Bison 2.4.762-2d822-dirty.  */
 
 /* Skeleton implementation for Bison LALR(1) parsers in PHP
    
@@ -117,11 +117,8 @@
      * Print a representation of the location.  For this to be correct,
      * <code>Position</code> should override the <code>equals</code>
      * method.  */
-    public function toString () {
-      if ($this->begin->equals ($this->end))
-        return $this->begin->toString ();
-      else
-        return $this->begin->toString () . "-" . $this->end->toString ();
+    public function __toString () {
+      return $this->begin . ($this->begin->equals ($this->end) ? "" : "-" . $this->end);
     }
   }
 
@@ -129,7 +126,7 @@
 
 class YYLexer implements LexerInterface {
 /* "%code lexer" blocks.  */
-/* Line 127 of lalr1.php  */
+/* Line 124 of lalr1.php  */
 /* Line 31 of "calc.y"  */
 
 
@@ -153,9 +150,9 @@ class YYLexer implements LexerInterface {
   public function yyerror (Location $l, $s)
   {
     if (is_null ($l))
-      fprintf (STDERR, "%s\n", $s);
+      fputs (STDERR, $s . "\n");
     else
-      fprintf (STDERR, "%s: %s\n", $l->toString (), $s);
+      fputs (STDERR, $l . ": " . $s . "\n");
   }
 
   private $yylval;
@@ -171,7 +168,7 @@ class YYLexer implements LexerInterface {
       $this->buffer = preg_replace ("/^[\\t ]+/", "", $this->buffer);
 
       if (strlen ($this->buffer) == 0)
-        return Lexer::EOF;
+        return LexerInterface::EOF;
       else
         if (substr ($this->buffer, 0, 1) == "\n")
           {
@@ -195,8 +192,8 @@ class YYLexer implements LexerInterface {
     }
 
 
-/* Line 127 of lalr1.php  */
-/* Line 200 of "calc.php"  */
+/* Line 124 of lalr1.php  */
+/* Line 197 of "calc.php"  */
 
   }
 
@@ -253,7 +250,7 @@ class YYStack {
 class Calc
 {
     /** Version number for the Bison executable that generated this parser.  */
-  const bisonVersion = "2.4.762-5220";
+  const bisonVersion = "2.4.762-2d822-dirty";
 
   /** Name of the skeleton that generated this parser.  */
   const bisonSkeleton = "lalr1.php";
@@ -404,64 +401,64 @@ class Calc
     switch ($yyn)
       {
           case 5:
-  /* Line 354 of lalr1.php  */
+  /* Line 351 of lalr1.php  */
 /* Line 20 of "calc.y"  */
     { printf ("\t%.10g\n", ($yystack->valueAt (2-(1)))); };
   break;
     
 
   case 6:
-  /* Line 354 of lalr1.php  */
+  /* Line 351 of lalr1.php  */
 /* Line 23 of "calc.y"  */
     { $yyval = ($yystack->valueAt (1-(1)));           };
   break;
     
 
   case 7:
-  /* Line 354 of lalr1.php  */
+  /* Line 351 of lalr1.php  */
 /* Line 24 of "calc.y"  */
     { $yyval = ($yystack->valueAt (3-(1))) + ($yystack->valueAt (3-(3)));      };
   break;
     
 
   case 8:
-  /* Line 354 of lalr1.php  */
+  /* Line 351 of lalr1.php  */
 /* Line 25 of "calc.y"  */
     { $yyval = ($yystack->valueAt (3-(1))) - ($yystack->valueAt (3-(3)));      };
   break;
     
 
   case 9:
-  /* Line 354 of lalr1.php  */
+  /* Line 351 of lalr1.php  */
 /* Line 26 of "calc.y"  */
     { $yyval = ($yystack->valueAt (3-(1))) * ($yystack->valueAt (3-(3)));      };
   break;
     
 
   case 10:
-  /* Line 354 of lalr1.php  */
+  /* Line 351 of lalr1.php  */
 /* Line 27 of "calc.y"  */
     { $yyval = ($yystack->valueAt (3-(1))) / ($yystack->valueAt (3-(3)));      };
   break;
     
 
   case 11:
-  /* Line 354 of lalr1.php  */
+  /* Line 351 of lalr1.php  */
 /* Line 28 of "calc.y"  */
     { $yyval = pow (($yystack->valueAt (3-(1))), ($yystack->valueAt (3-(3)))); };
   break;
     
 
   case 12:
-  /* Line 354 of lalr1.php  */
+  /* Line 351 of lalr1.php  */
 /* Line 29 of "calc.y"  */
     { $yyval = ($yystack->valueAt (3-(2)));           };
   break;
     
 
 
-/* Line 354 of lalr1.php  */
-/* Line 465 of "calc.php"  */
+/* Line 351 of lalr1.php  */
+/* Line 462 of "calc.php"  */
         default: break;
       }
 
@@ -530,7 +527,7 @@ class Calc
     if ($this->yydebug > 0)
     self::yycdebug ($s . ($yytype < self::yyntokens_ ? " token " : " nterm ")
               . $this->yytname_[$yytype] . " ("
-              . $yylocationp->toString () . ": "
+              . $yylocationp . ": "
               . ($yyvaluep == null ? "(null)" : $yyvaluep) . ")");
   }
 
@@ -1053,7 +1050,7 @@ private $yycheck_ = array(
 
 }
 
-/* Line 843 of lalr1.php  */
+/* Line 840 of lalr1.php  */
 /* Line 94 of "calc.y"  */
 
 class Position {
@@ -1071,7 +1068,7 @@ class Position {
     return $l->line == $this->line && $l->token == $this->token;
   }
 
-  public function toString ()
+  public function __toString ()
   {
     return $this->line . "." . $this->token;
   }

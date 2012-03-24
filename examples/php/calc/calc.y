@@ -50,9 +50,9 @@ exp:      NUM                { $$ = $1;           }
   public function yyerror (Location $l, $s)
   {
     if (is_null ($l))
-      fprintf (STDERR, "%s\n", $s);
+      fputs (STDERR, $s . "\n");
     else
-      fprintf (STDERR, "%s: %s\n", $l->toString (), $s);
+      fputs (STDERR, $l . ": " . $s . "\n");
   }
 
   private $yylval;
@@ -68,7 +68,7 @@ exp:      NUM                { $$ = $1;           }
       $this->buffer = preg_replace ("/^[\\t ]+/", "", $this->buffer);
 
       if (strlen ($this->buffer) == 0)
-        return Lexer::EOF;
+        return LexerInterface::EOF;
       else
         if (substr ($this->buffer, 0, 1) == "\n")
           {
@@ -107,7 +107,7 @@ class Position {
     return $l->line == $this->line && $l->token == $this->token;
   }
 
-  public function toString ()
+  public function __toString ()
   {
     return $this->line . "." . $this->token;
   }

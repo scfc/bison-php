@@ -110,14 +110,14 @@ class CalcLexer implements LexerInterface {
   public function yyerror (Location $l, $s)
   {
     if (is_null ($l))
-      fprintf (STDERR, "%s\n", s);
+      fputs (STDERR, $s . "\n");
     else
-      fprintf (STDERR, "%s: %s\n", $l->toString (), $s);
+      fputs (STDERR, $l . ": " . $s . "\n");
   }
 ]], [[
   public function yyerror ($s)
   {
-    fprintf (STDERR, "%s\n", $s);
+    fputs (STDERR, $s . "\n");
   }
 ]])[
 
@@ -178,7 +178,7 @@ class Position {
     return $l->line == $this->line && $l->token == $this->token;
   }
 
-  public function toString ()
+  public function __toString ()
   {
     return $this->line . "." . $this->token;
   }
@@ -414,7 +414,7 @@ m4_define([AT_CHECK_PHP_MINIMAL_W_LEXER],
 
   public function yyerror (m4_default([$8], [Location]) $loc, $s)
   {
-    fprintf (STDERR, "%s: %s\n", $loc->toString (), $s);
+    fprintf (STDERR, "%s: %s\n", $loc, $s);
   }
 
   public function yylex ()$2
